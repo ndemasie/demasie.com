@@ -1,6 +1,7 @@
+import { Sandstorm } from 'objects/Sandstorm'
+import { Starfield } from 'objects/Starfield'
+
 import { App } from './App'
-import { Sandstorm } from './objects/Sandstorm'
-import { Starfield } from './objects/Starfield'
 
 App.instance.addObject(new Starfield())
 App.instance.addObject(new Sandstorm())

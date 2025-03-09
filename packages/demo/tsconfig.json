@@ -20,6 +20,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "useDefineForClassFields": true,
+    //
+    "paths": {
+      "types/*": [
+        "./src/types/*"
+      ],
+      "objects/*": [
+        "./src/objects/*"
+      ]
+    }
   },
   "include": [
     "src"

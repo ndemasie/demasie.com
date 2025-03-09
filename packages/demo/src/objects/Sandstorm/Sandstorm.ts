@@ -1,9 +1,8 @@
 import * as THREE from 'three'
+import { SceneObject } from 'types/SceneObject'
 
 import fragmentShader from './fragmentShader.glsl'
 import vertexShader from './vertexShader.glsl'
-
-import { SceneObject } from '../../types/SceneObject'
 
 export class Sandstorm implements SceneObject {
   public geometry = new THREE.SphereGeometry(3.1, 64, 64)

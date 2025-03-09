@@ -1,9 +1,8 @@
 import * as THREE from 'three'
+import { SceneObject } from 'types/SceneObject'
 
 import fragmentShader from './fragmentShader.glsl'
 import vertexShader from './vertexShader.glsl'
-
-import { SceneObject } from '../../types/SceneObject'
 
 export class Palantir implements SceneObject {
   public geometry = new THREE.SphereGeometry(1, 64, 64)

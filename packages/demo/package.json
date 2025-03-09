@@ -18,7 +18,8 @@
   "dependencies": {
     "@types/three": "0.174.0",
     "noisejs": "2.1.0",
-    "three": "0.173.0"
+    "three": "0.173.0",
+    "vite-tsconfig-paths": "5.1.4"
   },
   "devDependencies": {
     "vite": "6.2.0",

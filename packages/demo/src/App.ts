@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-
-import { SceneObject } from './types/SceneObject'
+import { SceneObject } from 'types/SceneObject'
 
 export class App {
   public renderer: THREE.WebGLRenderer

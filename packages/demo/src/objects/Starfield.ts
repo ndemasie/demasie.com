@@ -1,6 +1,5 @@
 import * as THREE from 'three'
-
-import { SceneObject } from '../types/SceneObject'
+import { SceneObject } from 'types/SceneObject'
 
 function randomSpherePosition() {
   const radius = Math.random() * 25 + 25
