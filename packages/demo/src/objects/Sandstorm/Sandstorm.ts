@@ -3,7 +3,9 @@ import * as THREE from 'three'
 import fragmentShader from './fragmentShader.glsl'
 import vertexShader from './vertexShader.glsl'
 
-export class Sandstorm {
+import { SceneObject } from '../../types/SceneObject'
+
+export class Sandstorm implements SceneObject {
   public geometry = new THREE.SphereGeometry(3.1, 64, 64)
 
   public material = new THREE.ShaderMaterial({
@@ -23,7 +25,7 @@ export class Sandstorm {
 
   constructor() {}
 
-  get object3D() {
+  public get object3D() {
     return this.mesh
   }
 

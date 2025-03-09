@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import { SceneObject } from '../types/SceneObject'
+
 export class SphereParticles implements SceneObject {
   public geometry = new THREE.BufferGeometry()
 
@@ -48,7 +50,7 @@ export class SphereParticles implements SceneObject {
     )
   }
 
-  get object3D() {
+  public get object3D() {
     return this.points
   }
 

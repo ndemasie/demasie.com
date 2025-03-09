@@ -19,7 +19,7 @@ export class Sphere implements SceneObject {
 
   constructor() {}
 
-  get object3D() {
+  public get object3D() {
     return this.mesh
   }
 }

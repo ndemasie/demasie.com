@@ -40,7 +40,9 @@ export class App {
   }
 
   public addObject(obj: SceneObject) {
-    obj.object3D && this.scene.add(obj.object3D)
+    if (!obj.object3D) return
+
+    this.scene.add(obj.object3D)
     this.sceneObjects.push(obj)
   }
 

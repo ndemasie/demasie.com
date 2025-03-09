@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import { SceneObject } from '../types/SceneObject'
+
 function randomSpherePosition() {
   const radius = Math.random() * 25 + 25
   const u = Math.random()
@@ -53,7 +55,7 @@ export class Starfield implements SceneObject {
     )
   }
 
-  get object3D() {
+  public get object3D() {
     return this.points
   }
 }
