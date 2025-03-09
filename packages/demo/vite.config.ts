@@ -1,6 +1,6 @@
-import glsl from 'vite-plugin-glsl'
+import { glslify } from 'vite-plugin-glslify'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default {
-  plugins: [glsl(), tsconfigPaths()],
+  plugins: [glslify(), tsconfigPaths()],
 }
