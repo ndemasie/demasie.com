@@ -10,8 +10,8 @@ export class Sandstorm implements SceneObject {
   public material = new THREE.ShaderMaterial({
     transparent: true,
     uniforms: {
-      u_time: { value: 0.0 },
-      u_opacity: { value: 0.5 },
+      time: { value: 0.0 },
+      opacity: { value: 0.5 },
       resolution: {
         value: new THREE.Vector2(window.innerWidth, window.innerHeight),
       },
@@ -29,6 +29,6 @@ export class Sandstorm implements SceneObject {
   }
 
   public animate() {
-    this.material.uniforms.u_time.value += 0.01
+    this.material.uniforms.time.value += 0.01
   }
 }

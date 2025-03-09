@@ -1,5 +1,5 @@
-uniform float u_time;
-uniform float u_opacity;
+uniform float time;
+uniform float opacity;
 varying vec3 vPosition;
 
 // Perlin Noise Functions
@@ -91,10 +91,10 @@ float noise(vec3 p) {
 
 void main() {
   vec3 position = vPosition * 0.6; // Scale the noise space
-  float baseNoise = noise(position + vec3(u_time * 0.6)); // Dynamic base layer
-  float turbulence = abs(noise(position * 2.0 + vec3(u_time * 0.2))) * 0.05; // Add turbulence
+  float baseNoise = noise(position + vec3(time * 0.6)); // Dynamic base layer
+  float turbulence = abs(noise(position * 2.0 + vec3(time * 0.2))) * 0.05; // Add turbulence
   float intensity = baseNoise + turbulence; // Combine layers
   intensity = smoothstep(0.1, 0.8, intensity); // Add soft edges
-  float alpha = intensity * u_opacity; // Control transparency
+  float alpha = intensity * opacity; // Control transparency
   gl_FragColor = vec4(vec3(0.1), alpha); // Dark stormy clouds
 }
