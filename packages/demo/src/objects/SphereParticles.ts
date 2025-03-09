@@ -48,8 +48,8 @@ export class SphereParticles implements SceneObject {
     )
   }
 
-  public addToScene(scene: THREE.Scene) {
-    scene.add(this.points)
+  get object3D() {
+    return this.points
   }
 
   public animate() {

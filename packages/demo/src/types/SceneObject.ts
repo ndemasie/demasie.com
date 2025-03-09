@@ -7,7 +7,8 @@ export abstract class SceneObject {
   public mesh?: THREE.Mesh
   public points?: THREE.Points
 
-  public abstract addToScene?(scene: THREE.Scene): void
+  public object3D?: THREE.Object3D
+
   public abstract animate?(camera: THREE.Camera): void
   public abstract resize?(width: number, height: number): void
 }

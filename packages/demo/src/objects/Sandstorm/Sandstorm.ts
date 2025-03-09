@@ -23,8 +23,8 @@ export class Sandstorm {
 
   constructor() {}
 
-  public addToScene(scene: THREE.Scene) {
-    scene.add(this.mesh)
+  get object3D() {
+    return this.mesh
   }
 
   public animate() {

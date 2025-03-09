@@ -1,5 +1,7 @@
 import * as THREE from 'three'
 
+import { SceneObject } from '../types/SceneObject'
+
 export class Sphere implements SceneObject {
   public geometry = new THREE.SphereGeometry(2)
 
@@ -17,7 +19,7 @@ export class Sphere implements SceneObject {
 
   constructor() {}
 
-  public addToScene(scene: THREE.Scene) {
-    scene.add(this.mesh)
+  get object3D() {
+    return this.mesh
   }
 }
