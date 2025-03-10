@@ -12,17 +12,17 @@ export class Fire implements SceneObject {
   public material = new THREE.ShaderMaterial({
     // transparent: true,
     // side: THREE.BackSide,
-    defines: { ITERATIONS: '4', OCTAVES: '3' },
+    defines: { ITERATIONS: '10', OCTAVES: '4' },
     uniforms: {
       fireTexture: { value: this.texture },
       color: { value: new THREE.Color(0xeeeeee) },
       time: { value: 0.0 },
-      seed: { value: Math.random() * 19.19 },
+      seed: { value: Math.random() * 19.0 },
       invModelMatrix: { value: new THREE.Matrix4() },
       scale: { value: new THREE.Vector3(7, 7, 7) },
       noiseScale: { value: new THREE.Vector4(1, 2, 1, 0.3) },
-      magnitude: { value: 1.0 },
-      lacunarity: { value: 4.0 },
+      magnitude: { value: 2.5 },
+      lacunarity: { value: 3.0 },
       gain: { value: 0.6 },
     },
     vertexShader: `
