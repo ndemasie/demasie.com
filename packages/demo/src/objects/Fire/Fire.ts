@@ -5,7 +5,7 @@ import fireImage from './fire.png'
 import fragmentShader from './fragmentShader.glsl'
 
 export class Fire implements SceneObject {
-  public geometry = new THREE.SphereGeometry(1, 32, 32)
+  public geometry = new THREE.SphereGeometry(3, 32, 32)
 
   public texture = new THREE.TextureLoader().load(fireImage)
 
