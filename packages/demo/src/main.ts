@@ -7,23 +7,38 @@ import githubLogo from './github/github-mark.png'
 
 const starfield = new Starfield()
 
-const palantir1 = new Palantir({
-  strength: 1.3,
-  color: new THREE.Color('#B8E3E9'),
-  img: githubLogo,
-})
+const palantiri = [
+  new Palantir({
+    strength: 1.3,
+    color: new THREE.Color('#B8E3E9'),
+    img: githubLogo,
+  }),
+  new Palantir({
+    strength: 2.2,
+    color: new THREE.Color('#ff8b4d'),
+    img: githubLogo,
+  }),
+  new Palantir({
+    strength: 2.2,
+    color: new THREE.Color('#00FF00'),
+    img: githubLogo,
+  }),
+]
+const radius = 2.6
 
-const palantir2 = new Palantir({
-  strength: 2,
-  color: new THREE.Color('#ff8b4d'),
-  img: githubLogo,
-})
+for (let i = 0; i < palantiri.length; i++) {
+  const angle = (i / palantiri.length) * Math.PI * 2
+
+  palantiri[i].object3D.position.set(
+    Math.cos(angle) * radius,
+    0,
+    Math.sin(angle) * radius,
+  )
+}
+
+for (let i = 0; i < palantiri.length; i++) {
+  App.instance.addObject(palantiri[i])
+}
 
 App.instance.addObject(starfield)
-App.instance.addObject(palantir1)
-App.instance.addObject(palantir2)
-
-palantir1.object3D.position.set(3, 0, 0)
-palantir2.object3D.position.set(-3, 0, 0)
-
 App.instance.init()

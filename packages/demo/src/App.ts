@@ -57,7 +57,7 @@ export class App {
   private clock = new THREE.Clock()
   private cameraSweepDuration = 2
   private initialCameraPosition = new THREE.Vector3(-25, 15, 10)
-  private targetCameraPosition = new THREE.Vector3(-1.2, 1.6, 5)
+  private targetCameraPosition = new THREE.Vector3(2, 4, 8)
   private animateCameraSweep() {
     const t = Math.min(
       this.clock.getElapsedTime() / this.cameraSweepDuration,

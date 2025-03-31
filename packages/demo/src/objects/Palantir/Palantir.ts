@@ -23,7 +23,7 @@ export class Palantir implements SceneObject {
   }
 
   public animate() {
-    this.objPalantir.animate()
-    this.objVision.animate()
+    this.objPalantir.animate?.()
+    this.objVision.animate?.()
   }
 }

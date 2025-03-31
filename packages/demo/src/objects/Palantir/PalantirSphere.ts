@@ -4,13 +4,13 @@ import { SceneObject } from 'types/SceneObject'
 import PerlinNoiseTexture from './rgb-256x256.png'
 
 export class PalantirSphere implements SceneObject {
-  public geometry = new THREE.SphereGeometry(1, 18, 18)
+  public geometry = new THREE.SphereGeometry(1, 32, 32)
   public texture = new THREE.TextureLoader().load(PerlinNoiseTexture)
 
   public material = new THREE.ShaderMaterial({
-    transparent: true,
     side: THREE.FrontSide,
     blending: THREE.AdditiveBlending,
+    transparent: true,
     depthWrite: false, // Prevent depth buffer from blocking objects behind
     uniforms: {
       time: { value: 0.0 },
