@@ -1,5 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import { SceneObject } from 'types/SceneObject'
 
 export class App {
@@ -7,6 +10,7 @@ export class App {
   public camera: THREE.PerspectiveCamera
   public controls: OrbitControls
   public scene: THREE.Scene
+  private composer: EffectComposer
 
   private sceneObjects: SceneObject[] = []
 
@@ -26,16 +30,51 @@ export class App {
       1,
       100,
     )
-    this.camera.position.z = 10
+    this.camera.zoom = 0.7
+    this.camera.position.copy(this.initialCameraPosition)
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     this.controls.enableDamping = true
+    this.controls.maxDistance = 36
+    this.controls.minDistance = 2.6
 
     this.scene = new THREE.Scene()
-    // this.scene.fog = new THREE.FogExp2(0x000000, 0.3)
 
-    this.resize?.() // Setup size
-    this.animate?.() // Start animation
+    // Add post-processing
+    const renderPass = new RenderPass(this.scene, this.camera)
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      2.0, // Strength for a stronger bloom
+      0.02, // Radius for larger bloom
+      0.01, // Threshold for more bloom
+    )
+
+    this.composer = new EffectComposer(this.renderer)
+    this.composer.addPass(renderPass)
+    this.composer.addPass(bloomPass)
+  }
+
+  private clock = new THREE.Clock()
+  private cameraSweepDuration = 2
+  private initialCameraPosition = new THREE.Vector3(-25, 15, 10)
+  private targetCameraPosition = new THREE.Vector3(-1.2, 1.6, 5)
+  private animateCameraSweep() {
+    const t = Math.min(
+      this.clock.getElapsedTime() / this.cameraSweepDuration,
+      1,
+    )
+    if (t < 1) {
+      this.camera.position.lerpVectors(
+        this.initialCameraPosition,
+        this.targetCameraPosition,
+        t,
+      )
+    }
+
+    // Stop the clock when the sweep is complete
+    if (t === 1) {
+      this.clock.stop()
+    }
   }
 
   public addObject(obj: SceneObject) {
@@ -46,23 +85,34 @@ export class App {
   }
 
   public animate() {
-    window.requestAnimationFrame(() => this.animate())
+    this.animateCameraSweep()
+
     for (const obj of this.sceneObjects) {
-      obj?.animate?.(this.camera)
+      obj?.animate?.()
     }
 
-    this.renderer.render(this.scene, this.camera)
+    this.composer.render()
     this.controls.update()
   }
 
   public resize() {
     for (const obj of this.sceneObjects) {
-      obj?.resize?.(window.innerWidth, window.innerHeight)
+      obj?.resize?.()
     }
 
     this.camera.aspect = window.innerWidth / window.innerHeight
     this.camera.updateProjectionMatrix()
 
     this.renderer.setSize(window.innerWidth, window.innerHeight)
+    this.composer.setSize(window.innerWidth, window.innerHeight)
+  }
+
+  public init() {
+    document.body.appendChild(this.renderer.domElement)
+    this.clock.start() // Start the clock for the camera sweep
+    this.renderer.setAnimationLoop(this.animate.bind(this))
+
+    this.resize()
+    window.addEventListener('resize', this.resize.bind(this), false)
   }
 }
