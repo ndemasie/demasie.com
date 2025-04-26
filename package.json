@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "app": "bash -c 'npm --prefix ./packages/$0 run dev'",
-    "dev": "npm run docker:dev & watch:package & npm run watch:webcontainer:edu-i18next-react",
+    "dev": "npm run docker:dev & watch:package & npm run watch:webcontainer:nathan-edu-i18next",
     "docker:clean": "bash ./scripts/docker_functions.sh stop && bash ./scripts/docker_functions.sh clean",
     "docker:dev": "docker compose --file ./docker-compose.dev.yaml up --build --abort-on-container-exit",
     "docker:prod": "docker compose --file ./docker-compose.prod.yaml up --build --detach",
@@ -21,9 +21,8 @@
     "update": "npm run update:pkgs --workspaces",
     "update:lock": "npm run update:lock --workspaces",
     "terraform": "terraform -chdir='./infra'",
-    "watch:site:public": "echo \"Deprecated: $ npx nodemon --ext 'tsx' --watch './site/src/**/public/**/*.tsx' --exec 'bash ./scripts/copy_public_dirs.sh'\"",
     "watch:package": "npx nodemon --watch './packages/**/package.json' --exec 'npm i --package-lock-only --workspaces=false",
-    "watch:webcontainer:edu-i18next-react": "npx nodemon --watch './packages/edu-i18next-react/**/*.*' --exec 'npm run script:buildWebContainerFileSystemTree'"
+    "watch:webcontainer:nathan-edu-i18next": "npx nodemon --watch './packages/nathan-edu-i18next/**/*.*' --exec 'npm run script:buildWebContainerFileSystemTree'"
   },
   "devDependencies": {
     "@styled/typescript-styled-plugin": "^1.0.0",

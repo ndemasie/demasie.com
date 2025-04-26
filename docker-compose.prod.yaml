@@ -25,41 +25,41 @@ services:
       --include-stopped
       --revive-stopped
       --stop-timeout 30s
-      nginx-demasie
-      site-nathan
-      server-i18next-websocket
-      app-habit-print
-      app-referral-codes
+      demasie-proxy
+      nathan-app-site
+      nathan-edu-i18next-server
+      nathan-app-habit-print
+      nathan-app-referral-codes
 
-  nginx-demasie:
-    container_name: nginx-demasie
-    image: ghcr.io/ndemasie/nginx-demasie:latest
+  demasie-proxy:
+    container_name: demasie-proxy
+    image: ghcr.io/ndemasie/demasie-proxy:latest
     ports:
       - '9000:9000' # watchtower
-      - '10000:10000' # site-nathan
-      - '10100:10100' # site-nathan
-      - '10150:10150' # site-cutie
-      - '10200:10200' # server-i18next-websocket
-      - '10300:10300' # app-habit-print
-      - '10400:10400' # app-referral-codes
+      - '10000:10000' # nathan-app-site
+      - '10100:10100' # nathan-app-site
+      - '10150:10150' # natalie-app-site
+      - '10200:10200' # nathan-edu-i18next-server
+      - '10300:10300' # nathan-app-habit-print
+      - '10400:10400' # nathan-app-referral-codes
     restart: unless-stopped
 
-  site-nathan:
-    container_name: site-nathan
-    image: ghcr.io/ndemasie/site-nathan:latest
+  nathan-app-site:
+    container_name: nathan-app-site
+    image: ghcr.io/ndemasie/nathan-app-site:latest
     restart: unless-stopped
 
-  server-i18next-websocket:
-    container_name: server-i18next-websocket
-    image: ghcr.io/ndemasie/server-i18next-websocket:latest
+  nathan-edu-i18next-server:
+    container_name: nathan-edu-i18next-server
+    image: ghcr.io/ndemasie/nathan-edu-i18next-server:latest
     restart: unless-stopped
 
-  app-habit-print:
-    container_name: app-habit-print
-    image: ghcr.io/ndemasie/app-habit-print:latest
+  nathan-app-habit-print:
+    container_name: nathan-app-habit-print
+    image: ghcr.io/ndemasie/nathan-app-habit-print:latest
     restart: unless-stopped
 
-  app-referral-codes:
-    container_name: app-referral-codes
-    image: ghcr.io/ndemasie/app-referral-codes:latest
+  nathan-app-referral-codes:
+    container_name: nathan-app-referral-codes
+    image: ghcr.io/ndemasie/nathan-app-referral-codes:latest
     restart: unless-stopped

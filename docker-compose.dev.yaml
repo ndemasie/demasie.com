@@ -1,56 +1,56 @@
 services:
-  nginx-demasie:
-    container_name: nginx-demasie
+  demasie-proxy:
+    container_name: demasie-proxy
     build:
-      context: ./packages/nginx-demasie
+      context: ./packages/demasie-proxy
       dockerfile: Dockerfile.prod
     ports:
-      - '10000:10000' # site-nathan
-      - '10100:10100' # site-nathan
-      - '10150:10150' # site-cutie
-      - '10200:10200' # server-i18next-websocket
-      - '10300:10300' # app-habit-print
-      - '10400:10400' # app-referral-codes
+      - '10000:10000' # nathan-app-site
+      - '10100:10100' # nathan-app-site
+      - '10150:10150' # natalie-app-site
+      - '10200:10200' # nathan-edu-i18next-server
+      - '10300:10300' # nathan-app-habit-print
+      - '10400:10400' # nathan-app-referral-codes
     restart: always
     volumes:
-      - ./packages/nginx-demasie/conf.d:/etc/nginx/conf.d:ro
-      - ./packages/nginx-demasie/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./packages/demasie-proxy/conf.d:/etc/nginx/conf.d:ro
+      - ./packages/demasie-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./cert:/etc/nginx/cert:ro
 
-  site-nathan:
-    container_name: site-nathan
+  nathan-app-site:
+    container_name: nathan-app-site
     build:
-      context: ./packages/site-nathan
+      context: ./packages/nathan-app-site
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/site-nathan/src:/root/src:ro
-      - ./packages/site-nathan/public:/root/public:ro
+      - ./packages/nathan-app-site/src:/root/src:ro
+      - ./packages/nathan-app-site/public:/root/public:ro
 
-  server-i18next-websocket:
-    container_name: server-i18next-websocket
+  nathan-edu-i18next-server:
+    container_name: nathan-edu-i18next-server
     build:
-      context: ./packages/server-i18next-websocket
+      context: ./packages/nathan-edu-i18next-server
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/server-i18next-websocket/src:/root/src:ro
+      - ./packages/nathan-edu-i18next-server/src:/root/src:ro
 
-  app-habit-print:
-    container_name: app-habit-print
+  nathan-app-habit-print:
+    container_name: nathan-app-habit-print
     build:
-      context: ./packages/app-habit-print
+      context: ./packages/nathan-app-habit-print
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/app-habit-print/src:/root/src:ro
+      - ./packages/nathan-app-habit-print/src:/root/src:ro
 
-  app-referral-codes:
-    container_name: app-referral-codes
+  nathan-app-referral-codes:
+    container_name: nathan-app-referral-codes
     build:
-      context: ./packages/app-referral-codes
+      context: ./packages/nathan-app-referral-codes
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/app-referral-codes/src:/root/src:ro
-      - ./packages/app-referral-codes/public:/root/public:ro
+      - ./packages/nathan-app-referral-codes/src:/root/src:ro
+      - ./packages/nathan-app-referral-codes/public:/root/public:ro
