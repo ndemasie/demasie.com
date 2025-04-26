@@ -1,0 +1,21 @@
+{
+  "name": "@ndemasie/nathan-edu-i18next-server",
+  "description": "Server for i18next with WebSockets",
+  "version": "0.1.0",
+  "author": "Nathan DeMasie (https://nathan.demasie.com)",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "node --experimental-strip-types --experimental-transform-types --watch-path=./src ./src/index.ts",
+    "update:pkgs": "npx npm-check --update",
+    "update:lock": "npm i --package-lock-only --workspaces false"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.9",
+    "@types/ws": "8.5.12"
+  },
+  "dependencies": {
+    "ws": "8.18.0"
+  }
+}

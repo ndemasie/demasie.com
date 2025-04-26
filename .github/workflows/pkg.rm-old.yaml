@@ -9,18 +9,18 @@ jobs:
   remove_old_containers:
     runs-on: ubuntu-latest
     steps:
-      - name: remove-app-habit-print
+      - name: remove-nathan-app-habit-print
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'app-habit-print'
+          package-name: 'nathan-app-habit-print'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
 
-      - name: remove-app-referral-codes
+      - name: remove-nathan-app-referral-codes
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'app-referral-codes'
+          package-name: 'nathan-app-referral-codes'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
@@ -28,23 +28,23 @@ jobs:
       - name: remove-nginx-demise
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'nginx-demasie'
+          package-name: 'demasie-proxy'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
 
-      - name: remove-server-i18next-websocket
+      - name: remove-nathan-edu-i18next-server
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'server-i18next-websocket'
+          package-name: 'nathan-edu-i18next-server'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
 
-      - name: remove-site-nathan
+      - name: remove-nathan-app-site
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'site-nathan'
+          package-name: 'nathan-app-site'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'

@@ -37,13 +37,16 @@ function readDirectory(dirname: string): FileSystemTree {
 }
 
 // SCRIPT
-const tree = readDirectory(`./packages/edu-i18next-react`)
+const tree = readDirectory(`./packages/nathan-edu-i18next`)
 const content = JSON.stringify(tree)
 
-fs.mkdirSync(`./packages/site-nathan/public/webcontainer/edu-i18next-react`, {
-  recursive: true,
-})
+fs.mkdirSync(
+  `./packages/nathan-app-site/public/webcontainer/nathan-edu-i18next`,
+  {
+    recursive: true,
+  },
+)
 fs.writeFileSync(
-  `./packages/site-nathan/public/webcontainer/edu-i18next-react/fileSystemTree.json`,
+  `./packages/nathan-app-site/public/webcontainer/nathan-edu-i18next/fileSystemTree.json`,
   content,
 )
