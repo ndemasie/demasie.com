@@ -1,13 +1,24 @@
 # Stage 1: Build
 FROM node:22-alpine AS build
-WORKDIR /root
+
+RUN apk add --no-cache curl
+
 ENV NODE_ENV=development
 ENV ENVIRONMENT_MODE=development
+
+WORKDIR /root
 
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 
 EXPOSE 10300
+
+HEALTHCHECK \
+  --interval=30s \
+  --timeout=10s \
+  --start-period=15s \
+  --retries=3 \
+  CMD curl --head --fail --silent http://localhost:10300/health || exit 1
 
 ENTRYPOINT ["npm", "run", "dev"]

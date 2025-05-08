@@ -59,6 +59,10 @@ app.use(
   }),
 )
 
+app.head('/health', (req: Request, res: Response) => {
+  res.status(200).send('OK')
+})
+
 // Routes
 app.get(
   '/config/:configId/week',

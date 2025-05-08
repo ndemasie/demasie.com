@@ -36,14 +36,14 @@ flowchart TB
   subgraph Docker Compose
     cloudflared(cloudflared)
     nginx(nginx)
-    server_i18next_websocket(nathan-edu-i18next-server)
-    app_habit_print(nathan-app-habit-print)
-    app_referral_codes(nathan-app-referral-codes)
+    nathan_edu_i18next(nathan-edu-i18next-server)
+    nathan_app_habit_print(nathan-app-habit-print)
+    nathan_app_referral_codes(nathan-app-referral-codes)
 
     subgraph Site
-      site_nathan(nathan-app-site)
-      edu_i18next_react(nathan-edu-i18next)
-      edu_design_principles(nathan-edu-design-principles)
+      nathan_app_site(nathan-app-site)
+      nathan_edu_i18next(nathan-edu-i18next)
+      nathan_edu_design_principles(nathan-edu-design-principles)
     end
   end
 
@@ -55,15 +55,15 @@ flowchart TB
 
   cloudflared --- nginx
 
-  nginx ---|<div>nathan-app-site:10100</div>| site_nathan
-  nginx ---|<div>nathan-edu-i18next-server:10200</div>| server_i18next_websocket
-  nginx ---|<div>nathan-app-habit-print:10300</div>| app_habit_print
-  nginx ---|<div>app-referal-codes:10400</div>| app_referral_codes
+  nginx ---|<div>nathan-app-site:10100</div>| nathan_app_site
+  nginx ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
+  nginx ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
+  nginx ---|<div>nathna-app-referral-codes:10400</div>| nathan_app_referral_codes
 
-  site_nathan --> edu_i18next_react
-  site_nathan --> edu_design_principles
-  edu_i18next_react <-.->|ws| server_i18next_websocket
-  edu_design_principles -.-> |/nathan-edu-design-principles/proxy| codedamn_design_principles
+  nathan_app_site --> nathan_edu_i18next
+  nathan_app_site --> nathan_edu_design_principles
+  nathan_edu_i18next <-.->|ws| nathan_edu_i18next_server
+  nathan_edu_design_principles -.-> |/nathan-edu-design-principles/proxy| codedamn_design_principles
 
   click domain "https://www.demasie.com" _blank
   click domain_nathan "https://nathan.demasie.com" _blank
@@ -72,12 +72,12 @@ flowchart TB
 
   click nginx "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nginx" _blank
 
-  click app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
-  click app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-referral-codes" _blank
-  click edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
-  click edu_i18next_react "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank
-  click server_i18next_websocket "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next-server" _blank
-  click site_nathan "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank
+  click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
+  click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-referral-codes" _blank
+  click nathan_app_site "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank
+  click nathan_edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
+  click nathan_edu_i18next "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank
+  click nathan_edu_i18next_server "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next-server" _blank
 
   click codedamn_design_principles "https://codedamn.com/playground/qjHW2vXxppVc48uXH5UWv" _blank
 ```
