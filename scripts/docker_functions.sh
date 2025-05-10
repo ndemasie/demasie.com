@@ -3,22 +3,31 @@
 # DESCRIPTION:
 # Adds convenient functions for managing docker.
 
-# Can be called like ./docker_functions clean without need for sourcing file.
+# Can be called like `./docker_functions clean` without need for sourcing file.
+
+function up() {
+  local env=$1
+  shift
+  echo "docker compose -f ./docker-compose.${env}.yaml up $@"
+}
+
+function down() {
+  local env=$1
+  shift
+  echo "docker compose -f ./docker-compose.${env}.yaml down $@"
+}
 
 function clean() {
-  docker ps --all --quiet \
-  | xargs docker rm && docker image ls --quiet --filter 'dangling=true' \
-  | xargs docker rmi;
+  docker container ls --all --quiet | xargs docker rm;
+  docker image ls --quiet --filter 'dangling=true' | xargs docker rmi;
 }
 
 function free() {
-  docker volume ls --quiet --filter 'dangling=true' \
-  | xargs docker volume rm;
+  docker volume ls --quiet --filter 'dangling=true' | xargs docker volume rm;
 }
 
 function stop() {
-  docker ps --all --quiet \
-  | xargs docker stop;
+  docker container ls --all --quiet | xargs docker stop;
 }
 
 if declare -f "$1" > /dev/null
