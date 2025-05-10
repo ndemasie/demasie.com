@@ -5,7 +5,6 @@ services:
       context: ./packages/demasie-proxy
       dockerfile: Dockerfile.prod
     ports:
-      - '10000:10000' # nathan-app-site
       - '10100:10100' # nathan-app-site
       - '10150:10150' # natalie-app-site
       - '10200:10200' # nathan-edu-i18next-server

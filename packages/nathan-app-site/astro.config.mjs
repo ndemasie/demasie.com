@@ -25,7 +25,7 @@ export default defineConfig({
   },
 
   site:
-    process.env.ENVIRONMENT_MODE === 'production'
+    process.env.NODE_ENV === 'production'
       ? packageJson.homepage
       : 'http://localhost:10100',
 
