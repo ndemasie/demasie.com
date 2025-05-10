@@ -26,10 +26,10 @@ services:
       --revive-stopped
       --stop-timeout 30s
       demasie-proxy
-      nathan-app-site
-      nathan-edu-i18next-server
       nathan-app-habit-print
       nathan-app-referral-codes
+      nathan-app-site
+      nathan-edu-i18next-server
 
   demasie-proxy:
     container_name: demasie-proxy
