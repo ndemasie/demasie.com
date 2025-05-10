@@ -10,7 +10,7 @@ services:
       - '10150:10150' # natalie-app-site
       - '10200:10200' # nathan-edu-i18next-server
       - '10300:10300' # nathan-app-habit-print
-      - '10400:10400' # nathan-app-referral-codes
+      - '10400:10400' # nathan-app-refer-codes
     restart: always
     volumes:
       - ./packages/demasie-proxy/conf.d:/etc/nginx/conf.d:ro
@@ -45,12 +45,12 @@ services:
     volumes:
       - ./packages/nathan-app-habit-print/src:/root/src:ro
 
-  nathan-app-referral-codes:
-    container_name: nathan-app-referral-codes
+  nathan-app-refer-codes:
+    container_name: nathan-app-refer-codes
     build:
-      context: ./packages/nathan-app-referral-codes
+      context: ./packages/nathan-app-refer-codes
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/nathan-app-referral-codes/src:/root/src:ro
-      - ./packages/nathan-app-referral-codes/public:/root/public:ro
+      - ./packages/nathan-app-refer-codes/src:/root/src:ro
+      - ./packages/nathan-app-refer-codes/public:/root/public:ro

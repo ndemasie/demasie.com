@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/website.svg?label=nathan-app-site&url=http%3A%2F%2Fnathan-app-site.demasie.com/health"/><br/>
 <img src="https://img.shields.io/website.svg?label=nathan-edu-i18next-server&url=http%3A%2F%2Fnathan-edu-i18next-server.demasie.com/health"/><br/>
 <img src="https://img.shields.io/website.svg?label=nathan-app-habit-print&url=http%3A%2F%2Fnathan-app-habit-print.demasie.com/health"/><br/>
-<img src="https://img.shields.io/website.svg?label=nathan-app-referral-codes&url=http%3A%2F%2Fnathan-app-referral-codes.demasie.com/health"/><br/>
+<img src="https://img.shields.io/website.svg?label=nathan-app-refer-codes&url=http%3A%2F%2Fnathan-app-refer-codes.demasie.com/health"/><br/>
 
 <!-- ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ndemasie/ndemasie.github.io/deploy-ec2.yml) -->
 
@@ -38,7 +38,7 @@ flowchart TB
     nginx(nginx)
     nathan_edu_i18next(nathan-edu-i18next-server)
     nathan_app_habit_print(nathan-app-habit-print)
-    nathan_app_referral_codes(nathan-app-referral-codes)
+    nathan_app_referral_codes(nathan-app-refer-codes)
 
     subgraph Site
       nathan_app_site(nathan-app-site)
@@ -58,7 +58,7 @@ flowchart TB
   nginx ---|<div>nathan-app-site:10100</div>| nathan_app_site
   nginx ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
   nginx ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
-  nginx ---|<div>nathna-app-referral-codes:10400</div>| nathan_app_referral_codes
+  nginx ---|<div>nathna-app-refer-codes:10400</div>| nathan_app_referral_codes
 
   nathan_app_site --> nathan_edu_i18next
   nathan_app_site --> nathan_edu_design_principles
@@ -73,7 +73,7 @@ flowchart TB
   click nginx "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nginx" _blank
 
   click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
-  click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-referral-codes" _blank
+  click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
   click nathan_app_site "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank
   click nathan_edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
   click nathan_edu_i18next "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank

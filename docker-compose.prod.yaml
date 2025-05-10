@@ -27,7 +27,7 @@ services:
       --stop-timeout 30s
       demasie-proxy
       nathan-app-habit-print
-      nathan-app-referral-codes
+      nathan-app-refer-codes
       nathan-app-site
       nathan-edu-i18next-server
 
@@ -41,7 +41,7 @@ services:
       - '10150:10150' # natalie-app-site
       - '10200:10200' # nathan-edu-i18next-server
       - '10300:10300' # nathan-app-habit-print
-      - '10400:10400' # nathan-app-referral-codes
+      - '10400:10400' # nathan-app-refer-codes
     restart: unless-stopped
 
   nathan-app-site:
@@ -59,7 +59,7 @@ services:
     image: ghcr.io/ndemasie/nathan-app-habit-print:latest
     restart: unless-stopped
 
-  nathan-app-referral-codes:
-    container_name: nathan-app-referral-codes
-    image: ghcr.io/ndemasie/nathan-app-referral-codes:latest
+  nathan-app-refer-codes:
+    container_name: nathan-app-refer-codes
+    image: ghcr.io/ndemasie/nathan-app-refer-codes:latest
     restart: unless-stopped
