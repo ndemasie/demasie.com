@@ -5,6 +5,8 @@ RUN apk add --no-cache curl
 
 ENV NODE_ENV=production
 ENV ENVIRONMENT_MODE=production
+ENV HOST=localhost
+ENV PORT=10300
 
 WORKDIR /root
 
@@ -14,13 +16,13 @@ RUN npm ci
 
 COPY ./src ./src
 
-EXPOSE 10300
+EXPOSE ${PORT}
 
 HEALTHCHECK \
   --interval=30s \
   --timeout=10s \
   --start-period=15s \
   --retries=3 \
-  CMD curl --head --fail --silent http://localhost:10300/health || exit 1
+  CMD curl --head --fail --silent http://${HOST}:${PORT}/health || exit 1
 
 ENTRYPOINT ["npm", "run", "dev"]
