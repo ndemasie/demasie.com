@@ -1,6 +1,6 @@
 services:
-  cloudflared:
-    container_name: cloudflare-tunnel
+  demasie-cloudflared:
+    container_name: demasie-cloudflare-tunnel
     image: cloudflare/cloudflared
     restart: unless-stopped
     env_file: ./.env
@@ -8,8 +8,8 @@ services:
       - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
     command: tunnel --no-autoupdate run
 
-  watchtower:
-    container_name: watchtower
+  demasie-watchtower:
+    container_name: demasie-watchtower
     image: containrrr/watchtower
     env_file: ./.env
     environment:
