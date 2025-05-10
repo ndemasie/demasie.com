@@ -8,13 +8,13 @@
 function up() {
   local env=$1
   shift
-  echo "docker compose -f ./docker-compose.${env}.yaml up $@"
+  docker compose -f ./docker-compose.${env}.yaml up $@
 }
 
 function down() {
   local env=$1
   shift
-  echo "docker compose -f ./docker-compose.${env}.yaml down $@"
+  docker compose -f ./docker-compose.${env}.yaml down $@
 }
 
 function clean() {
