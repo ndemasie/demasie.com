@@ -18,16 +18,16 @@ function down() {
 }
 
 function clean() {
-  docker container ls --all --quiet | xargs docker rm;
-  docker image ls --quiet --filter 'dangling=true' | xargs docker rmi;
+  docker container ls --all --quiet | xargs -r docker rm;
+  docker image ls --quiet --filter 'dangling=true' | xargs -r docker rmi;
 }
 
 function free() {
-  docker volume ls --quiet --filter 'dangling=true' | xargs docker volume rm;
+  docker volume ls --quiet --filter 'dangling=true' | xargs -r docker volume rm;
 }
 
 function stop() {
-  docker container ls --all --quiet | xargs docker stop;
+  docker container ls --all --quiet | xargs -r docker stop;
 }
 
 if declare -f "$1" > /dev/null
