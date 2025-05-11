@@ -66,8 +66,8 @@ flowchart TB
 
   demasie_cloudflare --- demasie_proxy
 
-  demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
+  demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
   demasie_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
   demasie_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
   demasie_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
@@ -76,14 +76,15 @@ flowchart TB
 
   nathan_app_site --> nathan_edu_i18next
   nathan_app_site --> nathan_edu_design_principles
-  nathan_edu_i18next <-.->|ws| nathan_edu_i18next_server
   nathan_edu_design_principles -.-> |/nathan-edu-design-principles/proxy| codedamn_design_principles
+  nathan_edu_i18next <-.->|ws| nathan_edu_i18next_server
 
   click domain "https://www.demasie.com" _blank
   click domain_cutie "https://cutie.demasie.com" _blank
   click domain_habit "https://habit.demasie.com" _blank
   click domain_nathan "https://nathan.demasie.com" _blank
   click domain_refer "https://refer.demasie.com" _blank
+
   click demasie_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie_proxy" _blank
   click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
   click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
@@ -91,6 +92,7 @@ flowchart TB
   click nathan_edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
   click nathan_edu_i18next "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank
   click nathan_edu_i18next_server "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next-server" _blank
+
   click codedamn_design_principles "https://codedamn.com/playground/qjHW2vXxppVc48uXH5UWv" _blank
   click iluvyou_app "https://iluvyou.app/valentine?d=eyJuYW1lIjoiQ3V0aWUiLCJkYXlzIjoyNzQ1fQ%3D%3D" _blank
 ```

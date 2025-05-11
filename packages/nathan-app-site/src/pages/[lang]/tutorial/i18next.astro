@@ -5,6 +5,8 @@ import { Theme, Page, Language } from 'src/types'
 
 import { t } from 'src/locales'
 
+export const prerender = true
+
 export function getStaticPaths() {
   return Object.values(Language).map((lang) => ({ params: { lang } }))
 }

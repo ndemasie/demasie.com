@@ -20,10 +20,6 @@ export default defineConfig({
   adapter: nodejs({ mode: 'standalone' }),
   output: 'server',
 
-  experimental: {
-    svg: true,
-  },
-
   site:
     process.env.NODE_ENV === 'production'
       ? packageJson.homepage
