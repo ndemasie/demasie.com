@@ -171,14 +171,16 @@ export class WebSocketManager {
 
   private _log(message: string, payload?: any) {
     if (process.env.NODE_ENV === 'development') {
-      console.log(message, {
+      const state = {
         internal: {
           _client_leader: this._client_leader,
           clients: this._wss.clients.size,
         },
         lessonState: this.lessonState,
         ...(payload && { payload }),
-      })
+      }
+
+      console.log(message, JSON.stringify(state))
     }
   }
 }
