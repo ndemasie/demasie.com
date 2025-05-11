@@ -3,8 +3,6 @@ import PageLayout from 'src/layouts/PageLayout.astro'
 import FishChase from 'src/apps/FishChase/App.svelte'
 import { Language, Theme, Page } from 'src/types'
 
-export const prerender = true
-
 export function getStaticPaths() {
   return Object.values(Language).map((lang) => ({ params: { lang } }))
 }
