@@ -31,16 +31,22 @@ export const codes: Code[] = [
     url: 'https://www.airbnb.com/c/Px9xIz7qOpZufez1?unique_share_id=9561b453-a018-43e1-8da7-a46fafec67c8',
   },
   {
+    key: 'chase-bank',
+    brandKey: 'chase',
+    description: '$300 when opening a qualifying Chase checking account',
+    url: 'https://accounts.chase.com/raf/share/2520037318?jp_aid_a=T_86282&jp_aid_p=private_conversation_deck%2fconversationDeckMessageThree',
+  },
+  {
     key: 'chase-freedom',
     brandKey: 'chase',
     description: '$200 bonus with the Chase Freedom Unlimited card',
-    url: 'https://www.referyourchasecard.com/18J/XTM7MZ01WR',
+    url: 'https://www.referyourchasecard.com/18A/4V5FN49WD5',
   },
   {
     key: 'chase-sapphire',
     brandKey: 'chase',
-    description: '60,000 bonus points when you open a Chase Sapphire® card',
-    url: 'https://www.referyourchasecard.com/19q/F6VDV7BDOY',
+    description: 'Earn 100,000 bonus points with Chase Sapphire Preferred.',
+    url: 'https://www.referyourchasecard.com/19r/KL37LHY2VX',
   },
   {
     key: 'doordash',
@@ -58,7 +64,7 @@ export const codes: Code[] = [
     key: 'prenuvo',
     brandKey: 'prenuvo',
     description: '$300 off full body scan',
-    code: 'https://prenuvo.com/ref/UrKj1',
+    url: 'https://prenuvo.com/ref/UrKj1',
   },
   {
     key: 'purple',
