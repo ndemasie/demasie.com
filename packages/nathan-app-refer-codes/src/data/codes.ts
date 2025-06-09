@@ -10,12 +10,12 @@ export const brands: Brand[] = [
   { key: 'airbnb', name: 'Airbnb', logoUrl: '/brands/airbnb_logo.svg' },
   { key: 'chase', name: 'Chase', logoUrl: '/brands/chase_logo.svg', theme: 'light',},
   { key: 'doordash', name: 'DoorDash', logoUrl: '/brands/doordash_logo.svg'},
-  { key: 'prenuvo', name: 'Prenuvo', logoUrl: '/brands/prenuvo_logo.svg', theme: 'light',},
-  { key: 'purple', name: 'Purple', logoUrl: '/brands/purple_logo.svg' },
-  { key: 'wise', name: 'Wise', logoUrl: '/brands/wise_logo.svg' },
-  { key: 'uber', name: 'Uber', logoUrl: '/brands/uber_logo.svg', theme: 'light',},
   { key: 'lyft', name: 'Lyft', logoUrl: '/brands/lyft_logo.svg' },
   { key: 'mint-mobile', name: 'Mint Mobile', logoUrl: '/brands/mint_mobile.svg' },
+  { key: 'prenuvo', name: 'Prenuvo', logoUrl: '/brands/prenuvo_logo.svg', theme: 'light',},
+  { key: 'purple', name: 'Purple', logoUrl: '/brands/purple_logo.svg' },
+  { key: 'uber', name: 'Uber', logoUrl: '/brands/uber_logo.svg', theme: 'light',},
+  { key: 'wise', name: 'Wise', logoUrl: '/brands/wise_logo.svg' },
 ]
 
 export type Code = {
