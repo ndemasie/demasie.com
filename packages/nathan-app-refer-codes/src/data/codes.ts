@@ -8,13 +8,14 @@ export type Brand = {
 //prettier-ignore
 export const brands: Brand[] = [
   { key: 'airbnb', name: 'Airbnb', logoUrl: '/brands/airbnb_logo.svg' },
-  { key: 'chase', name: 'Chase', logoUrl: '/brands/chase_logo.svg', theme: 'light',},
-  { key: 'doordash', name: 'DoorDash', logoUrl: '/brands/doordash_logo.svg'},
+  { key: 'chase', name: 'Chase', logoUrl: '/brands/chase_logo.svg', theme: 'light' },
+  { key: 'doordash', name: 'DoorDash', logoUrl: '/brands/doordash_logo.svg' },
   { key: 'lyft', name: 'Lyft', logoUrl: '/brands/lyft_logo.svg' },
   { key: 'mint-mobile', name: 'Mint Mobile', logoUrl: '/brands/mint_mobile.svg' },
-  { key: 'prenuvo', name: 'Prenuvo', logoUrl: '/brands/prenuvo_logo.svg', theme: 'light',},
+  { key: 'prenuvo', name: 'Prenuvo', logoUrl: '/brands/prenuvo_logo.svg', theme: 'light' },
+  { key: 'private-internet-access', name: 'Private Internet Access', logoUrl: '/brands/pia_logo.svg', theme: 'light'},
   { key: 'purple', name: 'Purple', logoUrl: '/brands/purple_logo.svg' },
-  { key: 'uber', name: 'Uber', logoUrl: '/brands/uber_logo.svg', theme: 'light',},
+  { key: 'uber', name: 'Uber', logoUrl: '/brands/uber_logo.svg', theme: 'light' },
   { key: 'wise', name: 'Wise', logoUrl: '/brands/wise_logo.svg' },
 ]
 
@@ -33,6 +34,7 @@ export const codes: Code[] = [
   { key: 'doordash', brandKey: 'doordash', description: '$10 off your first 3 orders', url: 'https://drd.sh/nc4IL2bWVWYqs17p' },
   { key: 'lyft', brandKey: 'lyft', description: '50% off 2 rides', url: 'https://www.lyft.com/i/NATHAN67481?utm_medium=p2pi_iacc' },
   { key: 'mint-mobile', brandKey: 'mint-mobile', description: 'Get $15 in renewal credit', url: 'http://fbuy.me/vaRFL' },
+  { key: 'pia', brandKey: 'private-internet-access', description: 'Get 30 days free', url: 'https://www.privateinternetaccess.com/pages/buy-a-vpn/1218buyavpn?invite=U2FsdGVkX18P77qeez2G2JCh0J3YNx-hKan2ba92y9g%2CmsfRst0pmkdlVUDQZ33lJdCtHW0' },
   { key: 'prenuvo', brandKey: 'prenuvo', description: '$300 off full body scan', url: 'https://prenuvo.com/ref/UrKj1' },
   { key: 'purple', brandKey: 'purple', description: '10% off mattresses + 5% off accessories', url: 'https://share.purple.com/by/nathan_demasie' },
   { key: 'uber', brandKey: 'uber', description: '50% off on your first 2 rides', url: 'https://referrals.uber.com/refer?id=kpa4dhkm1g9e' },
