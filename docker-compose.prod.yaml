@@ -45,13 +45,7 @@ services:
     image: docker.n8n.io/n8nio/n8n
     container_name: tool-n8n
     restart: always
-    environment:
-      - N8N_HOST=tool-n8n.demasie.com
-      - N8N_PORT=9678
-      - N8N_PROTOCOL=https
-      - NODE_ENV=production
-      - WEBHOOK_URL=https://tool-n8n.demasie.com/
-      - GENERIC_TIMEZONE=America/New_York
+    env_file: ./packages/tool-n8n/base.env
     volumes:
       - ./packages/tool-n8n/.volume:/home/node/.n8n
 
