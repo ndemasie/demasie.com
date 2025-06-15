@@ -26,5 +26,8 @@ pnpm-debug.log*
 key.pem
 cert.pem
 
+# volumes
+.volume/
+
 # macOS-specific files
 .DS_Store

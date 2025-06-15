@@ -1,41 +1,19 @@
 services:
-  demasie-cloudflared:
-    container_name: demasie-cloudflared
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
-    command: tunnel --no-autoupdate run
-
-  demasie-watchtower:
-    container_name: demasie-watchtower
-    image: containrrr/watchtower
-    env_file: ./.env
-    environment:
-      - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.docker/config.json:/config.json
-    command: |-
-      --schedule "0 0 9 * * *"
-      --http-api-update
-      --http-api-periodic-polls
-      --cleanup
-      --include-stopped
-      --revive-stopped
-      --stop-timeout 30s
-      demasie-proxy
-      nathan-app-habit-print
-      nathan-app-refer-codes
-      nathan-app-site
-      nathan-edu-i18next-server
+  # demasie-cloudflared:
+  #   container_name: demasie-cloudflared
+  #   image: cloudflare/cloudflared
+  #   restart: unless-stopped
+  #   env_file: ./.env
+  #   environment:
+  #     - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
+  #   command: tunnel --no-autoupdate run
 
   demasie-proxy:
     container_name: demasie-proxy
     image: ghcr.io/ndemasie/demasie-proxy:latest
     ports:
-      - '9000:9000' # watchtower
+      - '9000:9000' # tool-watchtower
+      - '9678:9678' # tool-n8n
       - '10100:10100' # nathan-app-site
       - '10150:10150' # natalie-app-site
       - '10200:10200' # nathan-edu-i18next-server
@@ -62,3 +40,40 @@ services:
     container_name: nathan-app-refer-codes
     image: ghcr.io/ndemasie/nathan-app-refer-codes:latest
     restart: unless-stopped
+
+  tool-n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: tool-n8n
+    restart: always
+    environment:
+      - N8N_HOST=tool-n8n.demasie.com
+      - N8N_PORT=9678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://tool-n8n.demasie.com/
+      - GENERIC_TIMEZONE=America/New_York
+    volumes:
+      - ./packages/tool-n8n/.volume:/home/node/.n8n
+
+  tool-watchtower:
+    container_name: tool-watchtower
+    image: containrrr/watchtower
+    env_file: ./.env
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $HOME/.docker/config.json:/config.json
+    command: |-
+      --schedule "0 0 9 * * *"
+      --http-api-update
+      --http-api-periodic-polls
+      --cleanup
+      --include-stopped
+      --revive-stopped
+      --stop-timeout 30s
+      demasie-proxy
+      nathan-app-habit-print
+      nathan-app-refer-codes
+      nathan-app-site
+      nathan-edu-i18next-server
