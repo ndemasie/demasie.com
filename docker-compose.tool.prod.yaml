@@ -1,0 +1,39 @@
+services:
+  tool-cloudflared:
+    container_name: tool-cloudflared
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
+    command: tunnel --no-autoupdate run
+
+  tool-proxy:
+    container_name: tool-proxy
+    image: ghcr.io/ndemasie/tool-proxy:latest
+    ports:
+      - '9000:9000' # tool-watchtower
+    restart: unless-stopped
+
+  tool-watchtower:
+    container_name: tool-watchtower
+    image: containrrr/watchtower
+    env_file: ./.env
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - $HOME/.docker/config.json:/config.json
+    command: |-
+      --schedule "0 0 9 * * *"
+      --http-api-update
+      --http-api-periodic-polls
+      --cleanup
+      --include-stopped
+      --revive-stopped
+      --stop-timeout 30s
+      demasie-proxy
+      nathan-app-habit-print
+      nathan-app-refer-codes
+      nathan-app-site
+      nathan-edu-i18next-server

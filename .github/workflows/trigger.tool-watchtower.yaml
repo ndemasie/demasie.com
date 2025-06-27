@@ -1,4 +1,4 @@
-name: trigger watchtower
+name: trigger tool-watchtower
 
 on:
   workflow_dispatch:
@@ -15,4 +15,4 @@ jobs:
             --silent \
             --show-error \
             --max-time 10 \
-            https://watchtower.demasie.com/v1/update
+            https://tool-watchtower.demasie.com/v1/update
