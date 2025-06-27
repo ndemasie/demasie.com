@@ -31,8 +31,10 @@ flowchart TB
   end
 
   subgraph Docker Compose
-    demasie_cloudflare(demasie-cloudflare)
     demasie_proxy(demasie-proxy)
+    tool_cloudflare(tool-cloudflare)
+    tool_proxy(tool-proxy)
+    tool_watchtower(tool-watchtower)
 
     subgraph Natalie
       natalie_app_site(natalie-app-site)
@@ -58,19 +60,22 @@ flowchart TB
   end
 
   %% Flow
-  domain --- demasie_cloudflare
-  domain_nathan --- demasie_cloudflare
-  domain_habit --- demasie_cloudflare
-  domain_refer --- demasie_cloudflare
-  domain_cutie --- demasie_cloudflare
+  domain --- tool_cloudflare
+  domain_nathan --- tool_cloudflare
+  domain_habit --- tool_cloudflare
+  domain_refer --- tool_cloudflare
+  domain_cutie --- tool_cloudflare
 
-  demasie_cloudflare --- demasie_proxy
+  tool_cloudflare --- demasie_proxy
+  tool_cloudflare --- tool_proxy
 
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
   demasie_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
   demasie_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
   demasie_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
+
+  tool_proxy ---|<div>tool-watchtower:9000</div>| tool_watchtower
 
   natalie_app_site --> iluvyou_app
 
