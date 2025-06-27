@@ -5,16 +5,13 @@
 
 # Can be called like `./docker_functions clean` without need for sourcing file.
 
-function up() {
+function compose() {
   local env=$1
   shift
-  docker compose -f ./docker-compose.${env}.yaml up $@
-}
-
-function down() {
-  local env=$1
-  shift
-  docker compose -f ./docker-compose.${env}.yaml down $@
+  local files=()
+  [[ -f ./docker-compose.app.${env}.yaml ]] && files+=("-f ./docker-compose.app.${env}.yaml")
+  [[ -f ./docker-compose.tool.${env}.yaml ]] && files+=("-f ./docker-compose.tool.${env}.yaml")
+  docker compose ${files[@]} "$@"
 }
 
 function clean() {

@@ -1,41 +1,8 @@
 services:
-  demasie-cloudflared:
-    container_name: demasie-cloudflared
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
-    command: tunnel --no-autoupdate run
-
-  demasie-watchtower:
-    container_name: demasie-watchtower
-    image: containrrr/watchtower
-    env_file: ./.env
-    environment:
-      - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.docker/config.json:/config.json
-    command: |-
-      --schedule "0 0 9 * * *"
-      --http-api-update
-      --http-api-periodic-polls
-      --cleanup
-      --include-stopped
-      --revive-stopped
-      --stop-timeout 30s
-      demasie-proxy
-      nathan-app-habit-print
-      nathan-app-refer-codes
-      nathan-app-site
-      nathan-edu-i18next-server
-
   demasie-proxy:
     container_name: demasie-proxy
     image: ghcr.io/ndemasie/demasie-proxy:latest
     ports:
-      - '9000:9000' # watchtower
       - '10100:10100' # nathan-app-site
       - '10150:10150' # natalie-app-site
       - '10200:10200' # nathan-edu-i18next-server
