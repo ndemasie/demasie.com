@@ -3,7 +3,7 @@ name: pkg remove old
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 9 * * *' # 9:00 UTC-0 time daily
+    - cron: '0 9 */3 * *' # 9:00 UTC-0 time every 3 days
 
 jobs:
   remove_old_containers:
