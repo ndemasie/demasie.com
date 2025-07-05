@@ -1,0 +1,10 @@
+services:
+  nathan-mcp-twilio:
+    container_name: nathan-mcp-twilio
+    build:
+      context: ./packages/nathan-mcp-twilio
+      dockerfile: Dockerfile.dev
+    env_file: ./.env
+    ports:
+      - '8000:8000'
+    restart: always

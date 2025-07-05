@@ -1,0 +1,22 @@
+# BUILD
+FROM node:22-alpine AS base
+
+ENV HOST=nathan-mcp-twilio
+ENV PORT=8000
+
+WORKDIR /app
+
+# RUN apk update && apk upgrade -y
+RUN apk add --no-cache git && \
+  git clone https://ndemasie:${GITHUB_PUBLIC_ACCESS_TOKEN}@github.com/twilio-labs/mcp.git
+
+# BASE
+FROM base AS build
+
+WORKDIR /app
+
+COPY --from=base /app ./
+
+EXPOSE ${PORT}
+
+CMD ["npx", "-y", "@twilio-alpha/mcp", "${TWILIO_ACCOUNT_SID}/${TWILIO_API_KEY}:${TWILIO_API_SECRET}", "--services", "twilio_api_v2010"]
