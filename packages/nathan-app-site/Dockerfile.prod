@@ -11,7 +11,7 @@ ENV PORT=10100
 # BUILD
 FROM base AS build
 
-WORKDIR /root
+WORKDIR /app
 
 COPY ./package.json ./
 COPY ./package-lock.json ./
@@ -30,7 +30,7 @@ RUN npm run astro:build
 # RUNTIME
 FROM base AS runtime
 
-WORKDIR /root
+WORKDIR /app
 
 COPY --from=build /root/dist ./dist
 COPY --from=build /root/package.json ./
