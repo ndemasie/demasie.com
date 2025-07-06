@@ -30,11 +30,15 @@ flowchart TB
     domain_cutie("cutie.demasie.com")
   end
 
-  subgraph Docker Compose
-    demasie_proxy(demasie-proxy)
-    tool_cloudflare(tool-cloudflare)
+  tool_cloudflare(tool-cloudflare)
+
+  subgraph Tools
     tool_proxy(tool-proxy)
     tool_watchtower(tool-watchtower)
+  end
+
+  subgraph DeMasie
+    demasie_proxy(demasie-proxy)
 
     subgraph Natalie
       natalie_app_site(natalie-app-site)
@@ -52,11 +56,11 @@ flowchart TB
         nathan_edu_i18next_server(nathan_edu_i18next_server)
       end
     end
-  end
 
-  subgraph External
-    codedamn_design_principles(codedamn-design-principles)
-    iluvyou_app(iluvyou.app)
+    subgraph External
+      codedamn_design_principles(codedamn-design-principles)
+      iluvyou_app(iluvyou.app)
+    end
   end
 
   %% Flow
@@ -66,8 +70,8 @@ flowchart TB
   domain_refer --- tool_cloudflare
   domain_cutie --- tool_cloudflare
 
-  tool_cloudflare --- demasie_proxy
-  tool_cloudflare --- tool_proxy
+  tool_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
+  tool_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
 
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site

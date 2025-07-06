@@ -1,9 +1,0 @@
-{
-  "extends": [
-    "development"
-  ],
-  "hints": {
-    "compat-api/html": "off",
-    "typescript-config/strict": "off"
-  }
-}
