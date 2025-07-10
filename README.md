@@ -30,7 +30,9 @@ flowchart TB
     domain_cutie("cutie.demasie.com")
   end
 
-  tool_cloudflare(tool-cloudflare)
+  subgraph Infra
+    infra_cloudflare(infra-cloudflare)
+  end
 
   subgraph Tools
     tool_proxy(tool-proxy)
@@ -64,14 +66,14 @@ flowchart TB
   end
 
   %% Flow
-  domain --- tool_cloudflare
-  domain_nathan --- tool_cloudflare
-  domain_habit --- tool_cloudflare
-  domain_refer --- tool_cloudflare
-  domain_cutie --- tool_cloudflare
+  domain --- infra_cloudflare
+  domain_nathan --- infra_cloudflare
+  domain_habit --- infra_cloudflare
+  domain_refer --- infra_cloudflare
+  domain_cutie --- infra_cloudflare
 
-  tool_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
-  tool_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
+  infra_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
+  infra_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
 
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
