@@ -1,13 +1,4 @@
 services:
-  tool-cloudflared:
-    container_name: tool-cloudflared
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
-    command: tunnel --no-autoupdate run
-
   tool-proxy:
     container_name: tool-proxy
     image: ghcr.io/ndemasie/tool-proxy:latest

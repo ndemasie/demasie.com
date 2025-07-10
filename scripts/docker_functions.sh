@@ -8,10 +8,29 @@
 function compose() {
   local env=$1
   shift
+  local categories=(app tool infra)
+  local selected=()
+
+  # Check if the next argument matches a category
+  for cat in "${categories[@]}"; do
+    if [[ $1 == $cat ]]; then
+      selected+=("$cat")
+      shift
+    fi
+  done
+
+  # If no category was selected, use all
+  if [ ${#selected[@]} -eq 0 ]; then
+    selected=("${categories[@]}")
+  fi
+
   local files=()
-  [[ -f ./docker-compose.app.${env}.yaml ]] && files+=("-f ./docker-compose.app.${env}.yaml")
-  [[ -f ./docker-compose.tool.${env}.yaml ]] && files+=("-f ./docker-compose.tool.${env}.yaml")
-  docker compose ${files[@]} "$@"
+  for cat in "${selected[@]}"; do
+    local file="./docker-compose.${cat}.${env}.yaml"
+    [[ -f $file ]] && files+=("-f" "$file")
+  done
+
+  docker compose "${files[@]}" "$@"
 }
 
 function clean() {
