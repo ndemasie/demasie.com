@@ -15,7 +15,7 @@ protocol: quic
 ingress:
   # SSH access through tunnel
   - hostname: ssh.demasie.com
-    service: ssh://localhost:22
+    service: ssh://pub-server:22
     originRequest:
       connectTimeout: 30s
       keepAliveTimeout: 90s
