@@ -6,8 +6,8 @@ services:
     env_file: ./.env
     environment:
       - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
-    command: tunnel --no-autoupdate --config /etc/cloudflared/config.yml run
-    volumes:
-      - ./packages/infra-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+    command: tunnel --no-autoupdate run
+    # volumes:
+    #   - ./packages/infra-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
     extra_hosts:
       - 'host.docker.internal:host-gateway'
