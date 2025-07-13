@@ -1,13 +1,11 @@
 services:
   infra-cloudflared:
     container_name: infra-cloudflared
-    image: cloudflare/cloudflared:latest
+    image: cloudflare/cloudflared
     restart: unless-stopped
     env_file: ./.env
     environment:
       - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
     command: tunnel --no-autoupdate run
-    # volumes:
-    #   - ./packages/infra-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
     extra_hosts:
       - 'host.docker.internal:host-gateway'

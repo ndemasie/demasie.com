@@ -4,6 +4,7 @@
 <a href="https://nathan.demasie.com"><img src="https://img.shields.io/website.svg?label=nathan.demasie.com&url=http%3A%2F%2Fnathan.demasie.com/health"/></a><br/>
 <a href="https://habit.demasie.com"><img src="https://img.shields.io/website.svg?label=habit.demasie.com&url=http%3A%2F%2Fhabit.demasie.com/health"/></a><br/>
 <a href="https://refer.demasie.com"><img src="https://img.shields.io/website.svg?label=refer.demasie.com&url=http%3A%2F%2Frefer.demasie.com/health"/></a><br/>
+<a href="https://ssh.demasie.com"><img src="https://img.shields.io/website.svg?label=ssh.demasie.com&url=http%3A%2F%2Fssh.demasie.com/health"/></a><br/>
 
 <img src="https://img.shields.io/website.svg?label=nathan-app-site&url=http%3A%2F%2Fnathan-app-site.demasie.com/health"/><br/>
 <img src="https://img.shields.io/website.svg?label=nathan-edu-i18next-server&url=http%3A%2F%2Fnathan-edu-i18next-server.demasie.com/health"/><br/>
@@ -28,9 +29,14 @@ flowchart TB
     domain_habit("habit.demasie.com")
     domain_refer("refer.demasie.com")
     domain_cutie("cutie.demasie.com")
+    domain_ssh("ssh.demasie.com")
   end
 
   tool_cloudflare(tool-cloudflare)
+
+  subgraph Internals
+    internal_ssh(internal-ssh)
+  end
 
   subgraph Tools
     tool_proxy(tool-proxy)
@@ -69,9 +75,11 @@ flowchart TB
   domain_habit --- tool_cloudflare
   domain_refer --- tool_cloudflare
   domain_cutie --- tool_cloudflare
+  domain_ssh --- tool_cloudflare
 
   tool_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
   tool_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
+  tool_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
 
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
