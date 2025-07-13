@@ -1,3 +1,5 @@
+tunnel: demasie_server
+
 loglevel: info
 
 # Enable metrics endpoint (optional)
