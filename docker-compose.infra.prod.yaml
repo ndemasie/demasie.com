@@ -7,3 +7,6 @@ services:
     environment:
       - TUNNEL_TOKEN=$CLOUDFLARE_TUNNEL_TOKEN
     command: tunnel --no-autoupdate run
+    volumes:
+      - ./packages/infra-cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+    network_mode: host
