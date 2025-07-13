@@ -1,4 +1,5 @@
 tunnel: demasie_server
+credentials-file: /dev/null # Ignored when using token-based auth
 
 loglevel: info
 
