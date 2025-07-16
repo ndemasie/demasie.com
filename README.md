@@ -32,7 +32,9 @@ flowchart TB
     domain_ssh("ssh.demasie.com")
   end
 
-  tool_cloudflare(tool-cloudflare)
+  subgraph Infra
+    infra_cloudflare(infra-cloudflare)
+  end
 
   subgraph Internals
     internal_ssh(internal-ssh)
@@ -70,16 +72,16 @@ flowchart TB
   end
 
   %% Flow
-  domain --- tool_cloudflare
-  domain_nathan --- tool_cloudflare
-  domain_habit --- tool_cloudflare
-  domain_refer --- tool_cloudflare
-  domain_cutie --- tool_cloudflare
-  domain_ssh --- tool_cloudflare
+  domain --- infra_cloudflare
+  domain_nathan --- infra_cloudflare
+  domain_habit --- infra_cloudflare
+  domain_refer --- infra_cloudflare
+  domain_cutie --- infra_cloudflare
+  domain_ssh --- infra_cloudflare
 
-  tool_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
-  tool_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
-  tool_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
+  infra_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
+  infra_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
+  infra_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
 
   demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
@@ -87,7 +89,7 @@ flowchart TB
   demasie_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
   demasie_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
 
-  tool_proxy ---|<div>tool-watchtower:9000</div>| tool_watchtower
+  tool_proxy ---|<div>tool-watchtower:8080</div>| tool_watchtower
 
   natalie_app_site --> iluvyou_app
 
