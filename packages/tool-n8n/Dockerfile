@@ -1,8 +1,12 @@
 # BASE
 FROM docker.n8n.io/n8nio/n8n:latest AS base
 
+WORKDIR /app
+
 ENV HOST=tool-n8n
 ENV PORT=5678
+
+EXPOSE ${PORT}
 
 HEALTHCHECK \
   --interval=30s \
