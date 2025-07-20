@@ -4,19 +4,20 @@ services:
     image: ghcr.io/ndemasie/tool-proxy:latest
     ports:
       - '9000:9000' # tool-watchtower
-      - '9678:9678' # tool-n8n
+      - '5678:5678' # tool-n8n
     restart: unless-stopped
 
   tool-n8n:
-    image: docker.n8n.io/n8nio/n8n
     container_name: tool-n8n
+    build:
+      context: ./packages/tool-n8n
+      dockerfile: Dockerfile
     restart: always
     env_file:
       - ./packages/tool-n8n/.base.env
       - ./packages/tool-n8n/.prod.env
-    command: start --tunnel
     volumes:
-      - ./packages/tool-n8n/.volume:/home/node/.n8n:rw
+      - ./.volume/tool-n8n:/home/node/.n8n
 
   tool-watchtower:
     container_name: tool-watchtower
