@@ -6,6 +6,17 @@ services:
       - '9000:9000' # tool-watchtower
     restart: unless-stopped
 
+  tool-n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: tool-n8n
+    restart: always
+    env_file:
+      - ./packages/tool-n8n/.base.env
+      - ./packages/tool-n8n/.prod.env
+    command: start --tunnel
+    volumes:
+      - ./packages/tool-n8n/.volume:/home/node/.n8n:rw
+
   tool-watchtower:
     container_name: tool-watchtower
     image: containrrr/watchtower
