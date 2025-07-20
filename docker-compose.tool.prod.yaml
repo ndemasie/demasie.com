@@ -4,6 +4,7 @@ services:
     image: ghcr.io/ndemasie/tool-proxy:latest
     ports:
       - '9000:9000' # tool-watchtower
+      - '9678:9678' # tool-n8n
     restart: unless-stopped
 
   tool-n8n:
