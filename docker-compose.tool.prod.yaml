@@ -9,10 +9,9 @@ services:
 
   tool-n8n:
     container_name: tool-n8n
-    image: docker.n8n.io/n8nio/n8n
-    # build:
-    #   context: ./packages/tool-n8n
-    #   dockerfile: Dockerfile
+    build:
+      context: ./packages/tool-n8n
+      dockerfile: Dockerfile
     restart: always
     env_file:
       - ./packages/tool-n8n/.base.env
