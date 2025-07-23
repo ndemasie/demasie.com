@@ -4,7 +4,7 @@ services:
     image: ghcr.io/ndemasie/tool-proxy:latest
     ports:
       - '9000:9000' # tool-watchtower
-      - '5678:5678' # tool-n8n
+      # - '5678:5678' # tool-n8n runs its own tunnel
     restart: unless-stopped
 
   tool-n8n:
@@ -16,6 +16,7 @@ services:
     env_file:
       - ./packages/tool-n8n/.base.env
       - ./packages/tool-n8n/.prod.env
+    command: ['start', '--tunnel']
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
 
