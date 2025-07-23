@@ -16,7 +16,7 @@ services:
     env_file:
       - ./packages/tool-n8n/.base.env
       - ./packages/tool-n8n/.prod.env
-    command: ['start', '--tunnel']
+    # command: ['start', '--tunnel']
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
 
