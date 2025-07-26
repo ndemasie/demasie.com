@@ -1,3 +1,7 @@
+networks:
+  default:
+    name: app-network
+
 services:
   demasie-proxy:
     container_name: demasie-proxy
