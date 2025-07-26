@@ -22,7 +22,6 @@ services:
       - ./packages/tool-n8n/.prod.env
     environment:
       - NODE_ENV=production
-    # command: ['start', '--tunnel']
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
 
