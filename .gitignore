@@ -33,6 +33,7 @@ cert.pem
 
 # volumes
 .volume/
+!.volume/.keep
 
 # macOS-specific files
 .DS_Store
