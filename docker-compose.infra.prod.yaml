@@ -1,6 +1,3 @@
-networks:
-  infra-network:
-
 services:
   infra-cloudflared:
     container_name: infra-cloudflared

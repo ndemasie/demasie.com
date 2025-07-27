@@ -1,8 +1,3 @@
-networks:
-  tool-network:
-  infra-network:
-    external: true
-
 services:
   tool-proxy:
     container_name: tool-proxy
@@ -44,8 +39,6 @@ services:
       - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
       - traefik.http.middlewares.n8n.headers.STSPreload=true
       - traefik.http.routers.n8n.middlewares=n8n@docker
-    networks:
-      - infra-network
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
