@@ -1,32 +1,48 @@
+networks:
+  tool-network:
+
 services:
-  tool-proxy:
-    container_name: tool-proxy
-    build:
-      context: ./packages/tool-proxy
-      dockerfile: Dockerfile.prod
+  tool-traefik:
+    container_name: tool-traefik
+    image: traefik
     ports:
-      # - '9000:9000' # tool-watchtower
-      # - '5678:5678' # tool-n8n
+      - '80:80'
+      - '443:443'
+    networks:
+      - tool-network
     restart: unless-stopped
+    env_file: ./.env
+    command:
+      - '--api.insecure=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.web.http.redirections.entryPoint.to=websecure'
+      - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.websecure.address=:443'
+      - '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true'
+      - '--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}'
+      - '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
     volumes:
-      - ./packages/tool-proxy/conf.d:/etc/nginx/conf.d:ro
-      - ./packages/tool-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./cert:/etc/nginx/cert:ro
+      - ./.volume/tool-traefik:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   tool-n8n:
     container_name: tool-n8n
     build:
       context: ./packages/tool-n8n
       dockerfile: Dockerfile
+    ports:
+      - '127.0.0.1:5678:5678'
+    networks:
+      - tool-network
     restart: unless-stopped
     env_file:
       - ./packages/tool-n8n/.base.env
       - ./packages/tool-n8n/.prod.env
-    ports:
-      - '5678:5678'
     labels:
       - traefik.enable=true
-      - traefik.http.routers.n8n.rule=Host(`tool-n8n.demasie.com`)
+      - traefik.http.routers.n8n.rule=Host(`tool-n8n.${DOMAIN}`)
       - traefik.http.routers.n8n.tls=true
       - traefik.http.routers.n8n.entrypoints=web,websecure
       - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
@@ -35,10 +51,10 @@ services:
       - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
       - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
       - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
-      - traefik.http.middlewares.n8n.headers.SSLHost=demasie.com
+      - traefik.http.middlewares.n8n.headers.SSLHost=${DOMAIN}
       - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
       - traefik.http.middlewares.n8n.headers.STSPreload=true
-      - traefik.http.routers.n8n.middlewares=n8n@docker
+      - traefik.http.routers.n8n.middlewares=tool-n8n@docker
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
