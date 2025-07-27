@@ -1,0 +1,60 @@
+networks:
+  default:
+    name: ext-network
+
+services:
+  traefik:
+    container_name: traefik
+    image: 'traefik'
+    restart: unless-stopped
+    env_file:
+      - ./packages/tool-n8n/.prod.env
+    command:
+      - '--api.insecure=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.web.address=:80'
+      - '--entrypoints.web.http.redirections.entryPoint.to=websecure'
+      - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.websecure.address=:443'
+      - '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true'
+      - '--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}'
+      - '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
+    ports:
+      - '12000:80'
+      - '12001:443'
+    networks:
+      - 'ext-network'
+    volumes:
+      - ./.volume/traefik:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - '5678:5678'
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.n8n.rule=Host(`n8n.demasie.com`)
+      - traefik.http.routers.n8n.tls=true
+      - traefik.http.routers.n8n.entrypoints=web,websecure
+      - traefik.http.routers.n8n.tls.certresolver=mytlschallenge
+      - traefik.http.middlewares.n8n.headers.SSLRedirect=true
+      - traefik.http.middlewares.n8n.headers.STSSeconds=315360000
+      - traefik.http.middlewares.n8n.headers.browserXSSFilter=true
+      - traefik.http.middlewares.n8n.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.n8n.headers.forceSTSHeader=true
+      - traefik.http.middlewares.n8n.headers.SSLHost=demasie.com
+      - traefik.http.middlewares.n8n.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.n8n.headers.STSPreload=true
+      - traefik.http.routers.n8n.middlewares=n8n@docker
+    env_file:
+      - ./packages/tool-n8n/.base.env
+      - ./packages/tool-n8n/.prod.env
+    networks:
+      - 'ext-network'
+    volumes:
+      - ./.volume/tool-n8n:/home/node/.n8n
+      - ./.volume/local-files:/files
