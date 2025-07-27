@@ -1,6 +1,5 @@
 networks:
   infra-network:
-    external: true
 
 services:
   infra-cloudflared:

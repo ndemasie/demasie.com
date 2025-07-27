@@ -1,5 +1,7 @@
 networks:
   tool-network:
+  infra-network:
+    external: true
 
 services:
   tool-proxy:
