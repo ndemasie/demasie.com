@@ -1,5 +1,5 @@
 networks:
-  default:
+  ext-network:
     name: ext-network
 
 services:

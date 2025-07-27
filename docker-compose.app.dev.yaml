@@ -1,5 +1,5 @@
 networks:
-  default:
+  app-network:
     name: app-network
 
 services:

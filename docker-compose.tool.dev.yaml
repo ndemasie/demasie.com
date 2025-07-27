@@ -1,5 +1,5 @@
 networks:
-  default:
+  tool-network:
     name: tool-network
 
 services:
