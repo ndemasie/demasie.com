@@ -1,6 +1,5 @@
 networks:
   tool-network:
-    name: tool-network
 
 services:
   tool-proxy:

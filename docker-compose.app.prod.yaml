@@ -1,6 +1,5 @@
 networks:
   app-network:
-    name: app-network
 
 services:
   demasie-proxy:
