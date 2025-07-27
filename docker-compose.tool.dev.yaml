@@ -6,8 +6,8 @@ services:
     container_name: tool-traefik
     image: traefik
     ports:
-      - '80:80'
-      - '443:443'
+      - '9080:9080'
+      - '9443:9443'
     networks:
       - tool-network
     restart: unless-stopped
@@ -16,10 +16,10 @@ services:
       - '--api.insecure=true'
       - '--providers.docker=true'
       - '--providers.docker.exposedbydefault=false'
-      - '--entrypoints.web.address=:80'
+      - '--entrypoints.web.address=:9080'
       - '--entrypoints.web.http.redirections.entryPoint.to=websecure'
       - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
-      - '--entrypoints.websecure.address=:443'
+      - '--entrypoints.websecure.address=:9443'
       - '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true'
       - '--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}'
       - '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
