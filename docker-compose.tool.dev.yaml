@@ -1,5 +1,5 @@
-networks:
-  tool-network:
+# networks:
+#   tool-network:
 
 services:
   # tool-traefik:
@@ -34,8 +34,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - '5678:5678'
-    networks:
-      - tool-network
+    # networks:
+    #   - tool-network
     restart: unless-stopped
     env_file:
       - ./packages/tool-n8n/.base.env
