@@ -46,7 +46,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.tool-n8n.rule=Host(`tool-n8n.${DOMAIN}`)
       - traefik.http.routers.tool-n8n.tls=true
-      - traefik.http.routers.tool-n8n.entrypoints=websecure
+      - traefik.http.routers.tool-n8n.entrypoints=https
       - traefik.http.routers.tool-n8n.tls.certresolver=mytlschallenge
       - traefik.http.routers.tool-n8n.middlewares=tool-n8n@docker
       - traefik.http.middlewares.tool-n8n.headers.SSLRedirect=true
