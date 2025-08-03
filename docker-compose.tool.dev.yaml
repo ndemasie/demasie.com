@@ -57,6 +57,9 @@ services:
       - traefik.http.middlewares.tool-n8n.headers.SSLHost=${DOMAIN}
       - traefik.http.middlewares.tool-n8n.headers.STSIncludeSubdomains=true
       - traefik.http.middlewares.tool-n8n.headers.STSPreload=true
+      - traefik.http.services.tool-n8n.loadbalancer.server.port=5678
+      - traefik.http.services.tool-n8n.loadbalancer.server.scheme=http
+      - traefik.http.services.tool-n8n.loadbalancer.passHostHeader=true
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
