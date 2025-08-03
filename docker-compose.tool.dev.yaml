@@ -1,31 +1,37 @@
-# networks:
-#   tool-network:
-
 services:
-  # tool-traefik:
-  #   container_name: tool-traefik
-  #   image: traefik
-  #   ports:
-  #     - '80:80'
-  #     - '443:443'
-  #   networks:
-  #     - tool-network
-  #   restart: unless-stopped
-  #   env_file: ./.env
-  #   command:
-  #     - '--api.insecure=true'
-  #     - '--providers.docker=true'
-  #     - '--providers.docker.exposedbydefault=false'
-  #     - '--entrypoints.web.address=:80'
-  #     - '--entrypoints.web.http.redirections.entryPoint.to=websecure'
-  #     - '--entrypoints.web.http.redirections.entrypoint.scheme=https'
-  #     - '--entrypoints.websecure.address=:443'
-  #     - '--certificatesresolvers.mytlschallenge.acme.tlschallenge=true'
-  #     - '--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}'
-  #     - '--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json'
-  #   volumes:
-  #     - ./.volume/tool-traefik:/letsencrypt
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  tool-traefik:
+    container_name: tool-traefik
+    image: traefik
+    ports:
+      - '80:80'
+      - '443:443'
+    networks:
+      - tool-network
+    restart: unless-stopped
+    env_file: ./.env
+    command:
+      - --providers.docker=true
+      - --api.dashboard=true
+      - --providers.docker.exposedbydefault=false
+
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      - --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
+      - --certificatesresolvers.letsencrypt.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+
+      - --entrypoints.http.address=:80
+      - --entrypoints.http.http.redirections.entrypoint.to=https
+      - --entrypoints.http.http.redirections.entrypoint.scheme=https
+
+      - --entryPoints.https.address=:443
+      - --entrypoints.https.http.tls=true
+      - --entrypoints.https.http.tls.certResolver=letsencrypt
+      - --entrypoints.https.http.tls.domains[0].main=${DOMAIN}
+      - --entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN}
+    volumes:
+      - ./.volume/tool-traefik:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   tool-n8n:
     container_name: tool-n8n
@@ -34,8 +40,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - '5678:5678'
-    # networks:
-    #   - tool-network
     restart: unless-stopped
     env_file:
       - ./packages/tool-n8n/.base.env
