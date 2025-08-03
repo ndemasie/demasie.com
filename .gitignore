@@ -2,10 +2,14 @@
 dist/
 node_modules/
 
-# env variables
+# .env
 .env
 .prod.env
 .production.env
+# .conf
+.conf
+.prod.conf
+.production.conf
 
 # logs
 npm-debug.log*
