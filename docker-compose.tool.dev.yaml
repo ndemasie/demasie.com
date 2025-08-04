@@ -8,8 +8,12 @@ services:
     restart: unless-stopped
     env_file: ./.env
     command:
-      - --providers.docker=true
+      - '--accesslog'
+      - '--accesslog.filters.statuscodes=400-499,500-599'
+
       - --api.dashboard=true
+
+      - --providers.docker=true
       - --providers.docker.exposedbydefault=false
 
       - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
