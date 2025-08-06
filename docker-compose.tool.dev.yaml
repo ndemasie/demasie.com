@@ -67,3 +67,13 @@ services:
     volumes:
       - ./.volume/tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
+
+  tool-postgres-ai:
+    container_name: tool-postgres-ai
+    image: postgres:15
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./.volume/tool-postgres:/var/lib/postgresql/data
