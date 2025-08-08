@@ -30,10 +30,16 @@ flowchart TB
     domain_refer("refer.demasie.com")
     domain_cutie("cutie.demasie.com")
     domain_ssh("ssh.demasie.com")
+    domain_ftp("ftp.demasie.com")
   end
 
   subgraph Infra
     infra_cloudflare(infra-cloudflare)
+    infra_cloudflare_2(infra-cloudflare-2)
+  end
+
+  subgraph Android
+    demasie_tool_copyparty(demasie-tool-copyparty)
   end
 
   subgraph Internals
@@ -42,11 +48,15 @@ flowchart TB
 
   subgraph Tools
     demasie_tool_proxy(demasie-tool-proxy)
-    tool_watchtower(tool-watchtower)
+    demasie_tool_watchtower(demasie-tool-watchtower)
+
+    nathan_tool_n8n(nathan-tool-n8n)
+    nathan_tool_postgres_ai(nathan-tool-postgres-ai)
   end
 
   subgraph DeMasie
     demasie_app_proxy(demasie-app-proxy)
+    demasie_tool_proxy(demasie-tool-proxy)
 
     subgraph Natalie
       natalie_app_site(natalie-app-site)
@@ -56,6 +66,7 @@ flowchart TB
       nathan_edu_i18next(nathan-edu-i18next-server)
       nathan_app_habit_print(nathan-app-habit-print)
       nathan_app_refer_codes(nathan-app-refer-codes)
+
 
       subgraph Site
         nathan_app_site(nathan-app-site)
@@ -78,10 +89,12 @@ flowchart TB
   domain_refer --- infra_cloudflare
   domain_cutie --- infra_cloudflare
   domain_ssh --- infra_cloudflare
+  domain_ftp --- infra_cloudflare_2
 
   infra_cloudflare ---|<div>demasie-app-proxy:10100</br>demasie-app-proxy:10150</br>demasie-app-proxy:10200</br>demasie-app-proxy:10300</br>demasie-app-proxy:10400</br></div>| demasie_app_proxy
-  infra_cloudflare ---|<div>demasie-tool-proxy:9000</div>| demasie_tool_proxy
+  infra_cloudflare ---|<div>demasie-tool-proxy:80</br>demasie-tool-proxy:433</div>| demasie_tool_proxy
   infra_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
+  infra_cloudflare_2 ---|<div>host:8086</br>host:3939</div>| demasie_tool_copyparty
 
   demasie_app_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
   demasie_app_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
@@ -89,7 +102,10 @@ flowchart TB
   demasie_app_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
   demasie_app_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_refer_codes
 
-  demasie_tool_proxy ---|<div>tool-watchtower:8080</div>| tool_watchtower
+  demasie_tool_proxy ---|<div>demasie-tool-watchtower:8080</div>| demasie_tool_watchtower
+  demasie_tool_proxy ---|<div>demasie-tool-n8n:5678</div>| nathan_tool_n8n
+
+  nathan_tool_n8n <-.-> nathan_tool_postgres_ai
 
   natalie_app_site --> iluvyou_app
 
