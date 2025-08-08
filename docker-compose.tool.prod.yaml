@@ -1,34 +1,51 @@
-networks:
-  tool-network:
-
 services:
   demasie-tool-proxy:
     container_name: demasie-tool-proxy
-    image: ghcr.io/ndemasie/demasie-tool-proxy:latest
+    image: traefik
     ports:
-      - '9000:9000' # tool-watchtower
+      - '80:80'
+      - '443:443'
     restart: unless-stopped
-
-  tool-n8n:
-    container_name: tool-n8n
-    build:
-      context: ./packages/tool-n8n
-      dockerfile: Dockerfile
-    restart: always
-    env_file:
-      - ./packages/tool-n8n/.base.env
-      - ./packages/tool-n8n/.prod.env
-    environment:
-      - NODE_ENV=production
+    env_file: ./.env
+    command:
+      - '--accesslog'
+      - '--accesslog.filters.statuscodes=400-499,500-599'
+      - --api.dashboard=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
+      - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
+      - --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
+      - --certificatesresolvers.letsencrypt.acme.email=${SSL_EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+      - --entrypoints.http.address=:80
+      - --entrypoints.http.http.redirections.entrypoint.to=https
+      - --entrypoints.http.http.redirections.entrypoint.scheme=https
+      - --entryPoints.https.address=:443
+      - --entrypoints.https.http.tls=true
+      - --entrypoints.https.http.tls.certResolver=letsencrypt
+      - --entrypoints.https.http.tls.domains[0].main=${DOMAIN}
+      - --entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN}
     volumes:
-      - ./.volume/tool-n8n:/home/node/.n8n
+      - ./.volume/demasie-tool-proxy:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  tool-watchtower:
-    container_name: tool-watchtower
+  demasie-tool-watchtower:
+    container_name: demasie-tool-watchtower
     image: containrrr/watchtower
     env_file: ./.env
     environment:
       - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.demasie-tool-watchtower.rule=Host(`demasie-tool-watchtower.${DOMAIN}`) && Path(`/v1/update`)
+      - traefik.http.routers.demasie-tool-watchtower.tls=true
+      - traefik.http.routers.demasie-tool-watchtower.entrypoints=https
+      - traefik.http.routers.demasie-tool-watchtower.tls.certresolver=letsencrypt
+      - traefik.http.services.demasie-tool-watchtower.loadbalancer.server.port=8080
+      - traefik.http.services.demasie-tool-watchtower.loadbalancer.server.scheme=http
+      - traefik.http.routers.demasie-tool-watchtower.service=demasie-tool-watchtower
+      - traefik.http.routers.demasie-tool-watchtower.priority=100
     command: |-
       --schedule "0 0 9 * * *"
       --http-api-update
@@ -37,7 +54,7 @@ services:
       --include-stopped
       --revive-stopped
       --stop-timeout 30s
-      demasie-proxy
+      demasie-app-proxy
       nathan-app-habit-print
       nathan-app-refer-codes
       nathan-app-site
@@ -45,3 +62,50 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json
+
+  nathan-tool-n8n:
+    container_name: nathan-tool-n8n
+    build:
+      context: ./packages/nathan-tool-n8n
+      dockerfile: Dockerfile
+    ports:
+      - '5678:5678'
+    restart: unless-stopped
+    env_file:
+      - ./packages/nathan-tool-n8n/.base.env
+      - ./packages/nathan-tool-n8n/.prod.env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nathan-tool-n8n.rule=Host(`nathan-tool-n8n.${DOMAIN}`)
+      - traefik.http.routers.nathan-tool-n8n.tls=true
+      - traefik.http.routers.nathan-tool-n8n.entrypoints=https
+      - traefik.http.routers.nathan-tool-n8n.tls.certresolver=letsencrypt
+      - traefik.http.routers.nathan-tool-n8n.middlewares=nathan-tool-n8n@docker
+      - traefik.http.middlewares.nathan-tool-n8n.headers.SSLRedirect=true
+      - traefik.http.middlewares.nathan-tool-n8n.headers.STSSeconds=315360000
+      - traefik.http.middlewares.nathan-tool-n8n.headers.browserXSSFilter=true
+      - traefik.http.middlewares.nathan-tool-n8n.headers.contentTypeNosniff=true
+      - traefik.http.middlewares.nathan-tool-n8n.headers.forceSTSHeader=true
+      - traefik.http.middlewares.nathan-tool-n8n.headers.SSLHost=${DOMAIN}
+      - traefik.http.middlewares.nathan-tool-n8n.headers.STSIncludeSubdomains=true
+      - traefik.http.middlewares.nathan-tool-n8n.headers.STSPreload=true
+      - traefik.http.services.nathan-tool-n8n.loadbalancer.server.port=5678
+      - traefik.http.services.nathan-tool-n8n.loadbalancer.server.scheme=http
+      - traefik.http.services.nathan-tool-n8n.loadbalancer.passHostHeader=true
+    volumes:
+      - ./.volume/nathan-tool-n8n:/home/node/.n8n
+      - ./.volume/local-files:/files
+
+  nathan-tool-postgres-ai:
+    container_name: nathan-tool-postgres-ai
+    image: postgres:15
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_AI_DB}
+      POSTGRES_USER: ${POSTGRES_AI_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_AI_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./.volume/nathan-tool-postgres:/var/lib/postgresql/data

@@ -1,6 +1,6 @@
 services:
-  nathan-tool-proxy:
-    container_name: nathan-tool-proxy
+  demasie-tool-proxy:
+    container_name: demasie-tool-proxy
     image: traefik
     ports:
       - '80:80'
@@ -10,29 +10,24 @@ services:
     command:
       - '--accesslog'
       - '--accesslog.filters.statuscodes=400-499,500-599'
-
       - --api.dashboard=true
-
       - --providers.docker=true
       - --providers.docker.exposedbydefault=false
-
       - --certificatesresolvers.letsencrypt.acme.dnschallenge=true
       - --certificatesresolvers.letsencrypt.acme.dnschallenge.provider=cloudflare
       - --certificatesResolvers.letsencrypt.acme.dnschallenge.delayBeforeCheck=20
       - --certificatesresolvers.letsencrypt.acme.email=${SSL_EMAIL}
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
-
       - --entrypoints.http.address=:80
       - --entrypoints.http.http.redirections.entrypoint.to=https
       - --entrypoints.http.http.redirections.entrypoint.scheme=https
-
       - --entryPoints.https.address=:443
       - --entrypoints.https.http.tls=true
       - --entrypoints.https.http.tls.certResolver=letsencrypt
       - --entrypoints.https.http.tls.domains[0].main=${DOMAIN}
       - --entrypoints.https.http.tls.domains[0].sans=*.${DOMAIN}
     volumes:
-      - ./.volume/nathan-tool-proxy:/letsencrypt
+      - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
   nathan-tool-n8n:

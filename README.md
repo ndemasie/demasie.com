@@ -55,7 +55,7 @@ flowchart TB
     subgraph Nathan
       nathan_edu_i18next(nathan-edu-i18next-server)
       nathan_app_habit_print(nathan-app-habit-print)
-      nathan_app_referral_codes(nathan-app-refer-codes)
+      nathan_app_refer_codes(nathan-app-refer-codes)
 
       subgraph Site
         nathan_app_site(nathan-app-site)
@@ -87,7 +87,7 @@ flowchart TB
   demasie_app_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
   demasie_app_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
   demasie_app_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
-  demasie_app_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
+  demasie_app_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_refer_codes
 
   demasie_tool_proxy ---|<div>tool-watchtower:8080</div>| tool_watchtower
 
@@ -106,7 +106,7 @@ flowchart TB
 
   click demasie_app_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie-app-proxy" _blank
   click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
-  click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
+  click nathan_app_refer_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
   click nathan_app_site "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank
   click nathan_edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
   click nathan_edu_i18next "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank

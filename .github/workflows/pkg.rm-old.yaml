@@ -9,6 +9,14 @@ jobs:
   remove_old_containers:
     runs-on: ubuntu-latest
     steps:
+      - name: remove-demasie-app-proxy
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'demasie-app-proxy'
+          package-type: 'container'
+          min-versions-to-keep: 5
+          delete-only-untagged-versions: 'true'
+
       - name: remove-nathan-app-habit-print
         uses: actions/delete-package-versions@v5
         with:
@@ -25,10 +33,10 @@ jobs:
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
 
-      - name: remove-nginx-demise
+      - name: remove-nathan-app-site
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'demasie-app-proxy'
+          package-name: 'nathan-app-site'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
@@ -37,14 +45,6 @@ jobs:
         uses: actions/delete-package-versions@v5
         with:
           package-name: 'nathan-edu-i18next-server'
-          package-type: 'container'
-          min-versions-to-keep: 5
-          delete-only-untagged-versions: 'true'
-
-      - name: remove-nathan-app-site
-        uses: actions/delete-package-versions@v5
-        with:
-          package-name: 'nathan-app-site'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
