@@ -30,21 +30,33 @@ flowchart TB
     domain_refer("refer.demasie.com")
     domain_cutie("cutie.demasie.com")
     domain_ssh("ssh.demasie.com")
+    domain_ftp("ftp.demasie.com")
   end
 
-  tool_cloudflare(tool-cloudflare)
+  subgraph Infra
+    infra_cloudflare(infra-cloudflare)
+    infra_cloudflare_2(infra-cloudflare-2)
+  end
+
+  subgraph Android
+    demasie_tool_copyparty(demasie-tool-copyparty)
+  end
 
   subgraph Internals
     internal_ssh(internal-ssh)
   end
 
   subgraph Tools
-    tool_proxy(tool-proxy)
-    tool_watchtower(tool-watchtower)
+    demasie_tool_proxy(demasie-tool-proxy)
+    demasie_tool_watchtower(demasie-tool-watchtower)
+
+    nathan_tool_n8n(nathan-tool-n8n)
+    nathan_tool_postgres_ai(nathan-tool-postgres-ai)
   end
 
   subgraph DeMasie
-    demasie_proxy(demasie-proxy)
+    demasie_app_proxy(demasie-app-proxy)
+    demasie_tool_proxy(demasie-tool-proxy)
 
     subgraph Natalie
       natalie_app_site(natalie-app-site)
@@ -53,7 +65,8 @@ flowchart TB
     subgraph Nathan
       nathan_edu_i18next(nathan-edu-i18next-server)
       nathan_app_habit_print(nathan-app-habit-print)
-      nathan_app_referral_codes(nathan-app-refer-codes)
+      nathan_app_refer_codes(nathan-app-refer-codes)
+
 
       subgraph Site
         nathan_app_site(nathan-app-site)
@@ -70,24 +83,29 @@ flowchart TB
   end
 
   %% Flow
-  domain --- tool_cloudflare
-  domain_nathan --- tool_cloudflare
-  domain_habit --- tool_cloudflare
-  domain_refer --- tool_cloudflare
-  domain_cutie --- tool_cloudflare
-  domain_ssh --- tool_cloudflare
+  domain --- infra_cloudflare
+  domain_nathan --- infra_cloudflare
+  domain_habit --- infra_cloudflare
+  domain_refer --- infra_cloudflare
+  domain_cutie --- infra_cloudflare
+  domain_ssh --- infra_cloudflare
+  domain_ftp --- infra_cloudflare_2
 
-  tool_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
-  tool_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
-  tool_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
+  infra_cloudflare ---|<div>demasie-app-proxy:10100</br>demasie-app-proxy:10150</br>demasie-app-proxy:10200</br>demasie-app-proxy:10300</br>demasie-app-proxy:10400</br></div>| demasie_app_proxy
+  infra_cloudflare ---|<div>demasie-tool-proxy:80</br>demasie-tool-proxy:433</div>| demasie_tool_proxy
+  infra_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
+  infra_cloudflare_2 ---|<div>host:8086</br>host:3939</div>| demasie_tool_copyparty
 
-  demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
-  demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
-  demasie_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
-  demasie_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
-  demasie_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
+  demasie_app_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
+  demasie_app_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
+  demasie_app_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
+  demasie_app_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
+  demasie_app_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_refer_codes
 
-  tool_proxy ---|<div>tool-watchtower:9000</div>| tool_watchtower
+  demasie_tool_proxy ---|<div>demasie-tool-watchtower:8080</div>| demasie_tool_watchtower
+  demasie_tool_proxy ---|<div>demasie-tool-n8n:5678</div>| nathan_tool_n8n
+
+  nathan_tool_n8n <-.-> nathan_tool_postgres_ai
 
   natalie_app_site --> iluvyou_app
 
@@ -102,9 +120,9 @@ flowchart TB
   click domain_nathan "https://nathan.demasie.com" _blank
   click domain_refer "https://refer.demasie.com" _blank
 
-  click demasie_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie_proxy" _blank
+  click demasie_app_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie-app-proxy" _blank
   click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
-  click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
+  click nathan_app_refer_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
   click nathan_app_site "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank
   click nathan_edu_design_principles "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-design-principles" _blank
   click nathan_edu_i18next "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-edu-i18next" _blank

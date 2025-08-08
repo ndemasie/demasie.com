@@ -30,39 +30,6 @@ services:
       - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
 
-  demasie-tool-watchtower:
-    container_name: demasie-tool-watchtower
-    image: containrrr/watchtower
-    env_file: ./.env
-    environment:
-      - WATCHTOWER_HTTP_API_TOKEN=$WATCHTOWER_HTTP_API_TOKEN
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.demasie-tool-watchtower.rule=Host(`demasie-tool-watchtower.demasie.com`) && Path(`/v1/update`)
-      - traefik.http.routers.demasie-tool-watchtower.tls=true
-      - traefik.http.routers.demasie-tool-watchtower.entrypoints=https
-      - traefik.http.routers.demasie-tool-watchtower.tls.certresolver=letsencrypt
-      - traefik.http.services.demasie-tool-watchtower.loadbalancer.server.port=8080
-      - traefik.http.services.demasie-tool-watchtower.loadbalancer.server.scheme=http
-      - traefik.http.routers.demasie-tool-watchtower.service=demasie-tool-watchtower
-      - traefik.http.routers.demasie-tool-watchtower.priority=100
-    command: |-
-      --schedule "0 0 9 * * *"
-      --http-api-update
-      --http-api-periodic-polls
-      --cleanup
-      --include-stopped
-      --revive-stopped
-      --stop-timeout 30s
-      demasie-app-proxy
-      nathan-app-habit-print
-      nathan-app-refer-codes
-      nathan-app-site
-      nathan-edu-i18next-server
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - $HOME/.docker/config.json:/config.json
-
   nathan-tool-n8n:
     container_name: nathan-tool-n8n
     build:
