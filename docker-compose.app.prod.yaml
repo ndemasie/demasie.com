@@ -1,7 +1,7 @@
 services:
-  demasie-proxy:
-    container_name: demasie-proxy
-    image: ghcr.io/ndemasie/demasie-proxy:latest
+  demasie-app-proxy:
+    container_name: demasie-app-proxy
+    image: ghcr.io/ndemasie/demasie-app-proxy:latest
     ports:
       - '10100:10100' # nathan-app-site
       - '10150:10150' # natalie-app-site

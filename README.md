@@ -41,12 +41,12 @@ flowchart TB
   end
 
   subgraph Tools
-    tool_proxy(tool-proxy)
+    demasie_tool_proxy(demasie-tool-proxy)
     tool_watchtower(tool-watchtower)
   end
 
   subgraph DeMasie
-    demasie_proxy(demasie-proxy)
+    demasie_app_proxy(demasie-app-proxy)
 
     subgraph Natalie
       natalie_app_site(natalie-app-site)
@@ -79,17 +79,17 @@ flowchart TB
   domain_cutie --- infra_cloudflare
   domain_ssh --- infra_cloudflare
 
-  infra_cloudflare ---|<div>demasie-proxy:10100</br>demasie-proxy:10150</br>demasie-proxy:10200</br>demasie-proxy:10300</br>demasie-proxy:10400</br></div>| demasie_proxy
-  infra_cloudflare ---|<div>tool-proxy:9000</div>| tool_proxy
+  infra_cloudflare ---|<div>demasie-app-proxy:10100</br>demasie-app-proxy:10150</br>demasie-app-proxy:10200</br>demasie-app-proxy:10300</br>demasie-app-proxy:10400</br></div>| demasie_app_proxy
+  infra_cloudflare ---|<div>demasie-tool-proxy:9000</div>| demasie_tool_proxy
   infra_cloudflare ---|<div>host.docker.internal</div>| internal_ssh
 
-  demasie_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
-  demasie_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
-  demasie_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
-  demasie_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
-  demasie_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
+  demasie_app_proxy ---|<div>nathan-app-site:10100</div>| nathan_app_site
+  demasie_app_proxy ---|<div>natalie-app-site:10150</div>| natalie_app_site
+  demasie_app_proxy ---|<div>nathan-edu-i18next-server:10200</div>| nathan_edu_i18next_server
+  demasie_app_proxy ---|<div>nathan-app-habit-print:10300</div>| nathan_app_habit_print
+  demasie_app_proxy ---|<div>nathan-app-refer-codes:10400</div>| nathan_app_referral_codes
 
-  tool_proxy ---|<div>tool-watchtower:8080</div>| tool_watchtower
+  demasie_tool_proxy ---|<div>tool-watchtower:8080</div>| tool_watchtower
 
   natalie_app_site --> iluvyou_app
 
@@ -104,7 +104,7 @@ flowchart TB
   click domain_nathan "https://nathan.demasie.com" _blank
   click domain_refer "https://refer.demasie.com" _blank
 
-  click demasie_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie_proxy" _blank
+  click demasie_app_proxy "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/demasie-app-proxy" _blank
   click nathan_app_habit_print "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-habit-print" _blank
   click nathan_app_referral_codes "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-refer-codes" _blank
   click nathan_app_site "https://github.com/ndemasie/ndemasie.github.io/tree/main/packages/nathan-app-site" _blank

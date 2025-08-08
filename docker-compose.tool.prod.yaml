@@ -2,12 +2,11 @@ networks:
   tool-network:
 
 services:
-  tool-proxy:
-    container_name: tool-proxy
-    image: ghcr.io/ndemasie/tool-proxy:latest
+  demasie-tool-proxy:
+    container_name: demasie-tool-proxy
+    image: ghcr.io/ndemasie/demasie-tool-proxy:latest
     ports:
       - '9000:9000' # tool-watchtower
-      - '5678:5678' # tool-n8n
     restart: unless-stopped
 
   tool-n8n:

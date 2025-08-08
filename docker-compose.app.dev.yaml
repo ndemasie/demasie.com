@@ -1,8 +1,8 @@
 services:
-  demasie-proxy:
-    container_name: demasie-proxy
+  demasie-app-proxy:
+    container_name: demasie-app-proxy
     build:
-      context: ./packages/demasie-proxy
+      context: ./packages/demasie-app-proxy
       dockerfile: Dockerfile.prod
     ports:
       - '10100:10100' # nathan-app-site
@@ -12,8 +12,8 @@ services:
       - '10400:10400' # nathan-app-refer-codes
     restart: unless-stopped
     volumes:
-      - ./packages/demasie-proxy/conf.d:/etc/nginx/conf.d:ro
-      - ./packages/demasie-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./packages/demasie-app-proxy/conf.d:/etc/nginx/conf.d:ro
+      - ./packages/demasie-app-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./cert:/etc/nginx/cert:ro
 
   nathan-app-site:

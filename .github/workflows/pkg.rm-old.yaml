@@ -28,7 +28,7 @@ jobs:
       - name: remove-nginx-demise
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'demasie-proxy'
+          package-name: 'demasie-app-proxy'
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'

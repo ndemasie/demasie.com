@@ -1,4 +1,4 @@
-name: publish tool-proxy
+name: publish demasie-tool-proxy
 
 on:
   workflow_dispatch:
@@ -6,10 +6,10 @@ on:
     branches:
       - main
     paths:
-      - 'packages/tool-proxy/**'
+      - 'packages/demasie-tool-proxy/**'
 
 env:
-  IMAGE_NAME: tool-proxy
+  IMAGE_NAME: demasie-tool-proxy
   REGISTRY: ghcr.io
 
 jobs:
