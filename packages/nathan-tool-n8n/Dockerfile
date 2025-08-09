@@ -1,7 +1,7 @@
 # BASE
 FROM docker.n8n.io/n8nio/n8n:latest AS base
 
-WORKDIR /app
+WORKDIR /root
 
 ENV HOST=nathan-tool-n8n
 ENV PORT=5678
