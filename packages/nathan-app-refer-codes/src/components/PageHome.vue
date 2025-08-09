@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { refDebounced } from '@vueuse/core'
+
 import SearchBar from '@/components/SearchBar.vue'
 import CodeGrid from '@/components/CodeGrid.vue'
 import CodeModal from '@/components/CodeModal.vue'
@@ -6,6 +8,7 @@ import CodeModal from '@/components/CodeModal.vue'
 import { ref, watch } from 'vue'
 
 const search = ref('')
+const debouncedSearch = refDebounced(search, 300)
 </script>
 
 <template>
@@ -18,7 +21,7 @@ const search = ref('')
   </section>
 
   <section id="results" class="mx-auto max-w-5xl gap-6">
-    <CodeGrid :search="search" />
+    <CodeGrid :search="debouncedSearch" />
   </section>
 
   <CodeModal />
