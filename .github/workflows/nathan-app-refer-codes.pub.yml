@@ -1,4 +1,4 @@
-name: publish nathan-app-habit-print
+name: nathan-app-refer-codes publish
 
 on:
   workflow_dispatch:
@@ -6,10 +6,10 @@ on:
     branches:
       - main
     paths:
-      - 'packages/nathan-app-habit-print/**'
+      - 'packages/nathan-app-refer-codes/**'
 
 env:
-  IMAGE_NAME: nathan-app-habit-print
+  IMAGE_NAME: nathan-app-refer-codes
   REGISTRY: ghcr.io
 
 jobs:

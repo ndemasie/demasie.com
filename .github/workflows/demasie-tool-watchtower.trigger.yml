@@ -1,4 +1,4 @@
-name: trigger demasie-tool-watchtower
+name: demasie-tool-watchtower trigger
 
 on:
   workflow_dispatch:

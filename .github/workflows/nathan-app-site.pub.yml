@@ -1,4 +1,4 @@
-name: publish nathan-app-site
+name: nathan-app-site publish
 
 on:
   workflow_dispatch:

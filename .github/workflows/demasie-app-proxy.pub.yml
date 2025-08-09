@@ -1,4 +1,4 @@
-name: publish nathan-edu-i18next-server
+name: demasie-app-proxy publish
 
 on:
   workflow_dispatch:
@@ -6,10 +6,10 @@ on:
     branches:
       - main
     paths:
-      - 'packages/nathan-edu-i18next-server/**'
+      - 'packages/demasie-app-proxy/**'
 
 env:
-  IMAGE_NAME: nathan-edu-i18next-server
+  IMAGE_NAME: demasie-app-proxy
   REGISTRY: ghcr.io
 
 jobs:

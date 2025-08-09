@@ -1,0 +1,18 @@
+name: nathan-edu-i18next-server remove old pkgs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 */3 * *' # 9:00 UTC-0 time every 3 days
+
+jobs:
+  remove_old_containers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: nathan-edu-i18next-server-remove-old-pkgs
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'nathan-edu-i18next-server'
+          package-type: 'container'
+          min-versions-to-keep: 5
+          delete-only-untagged-versions: 'true'
