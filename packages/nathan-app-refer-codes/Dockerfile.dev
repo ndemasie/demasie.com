@@ -10,7 +10,7 @@ ENV PORT=10400
 # BUILD
 FROM base AS build
 
-WORKDIR /app
+WORKDIR /root
 
 COPY ./package.json ./
 COPY ./package-lock.json ./
