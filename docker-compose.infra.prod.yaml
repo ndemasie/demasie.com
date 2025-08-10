@@ -1,3 +1,9 @@
+networks:
+  app-network:
+    external: true
+  tool-network:
+    external: true
+
 services:
   infra-cloudflared:
     container_name: infra-cloudflared
@@ -9,3 +15,6 @@ services:
     command: tunnel --no-autoupdate run
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    networks:
+      - app-network
+      - tool-network
