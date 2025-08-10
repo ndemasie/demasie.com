@@ -1,7 +1,9 @@
 networks:
   app-network:
+    name: app-network
     external: true
   tool-network:
+    name: tool-network
     external: true
 
 services:
