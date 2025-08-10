@@ -1,7 +1,7 @@
 networks:
   app-network:
     name: app-network
-    driver: bridge
+    external: true
 
 services:
   demasie-app-proxy:

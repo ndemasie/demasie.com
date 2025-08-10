@@ -1,7 +1,7 @@
 networks:
   tool-network:
     name: tool-network
-    driver: bridge
+    external: true
 
 services:
   demasie-tool-proxy:
