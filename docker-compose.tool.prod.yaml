@@ -1,5 +1,6 @@
 networks:
   tool-network:
+    name: tool-network
     driver: bridge
 
 services:
