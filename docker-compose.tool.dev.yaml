@@ -1,3 +1,8 @@
+networks:
+  tool-network:
+    name: tool-network
+    external: true
+
 services:
   demasie-tool-proxy:
     container_name: demasie-tool-proxy
@@ -29,6 +34,8 @@ services:
     volumes:
       - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - tool-network
 
   nathan-tool-n8n:
     container_name: nathan-tool-n8n
@@ -62,6 +69,8 @@ services:
     volumes:
       - ./.volume/nathan-tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
+    networks:
+      - tool-network
 
   nathan-tool-postgres-ai:
     container_name: nathan-tool-postgres-ai
@@ -76,3 +85,5 @@ services:
       - '5432:5432'
     volumes:
       - ./.volume/nathan-tool-postgres:/var/lib/postgresql/data
+    networks:
+      - tool-network

@@ -1,3 +1,8 @@
+networks:
+  app-network:
+    name: app-network
+    external: true
+
 services:
   demasie-app-proxy:
     container_name: demasie-app-proxy
@@ -9,23 +14,33 @@ services:
       - '10300:10300' # nathan-app-habit-print
       - '10400:10400' # nathan-app-refer-codes
     restart: unless-stopped
+    networks:
+      - app-network
 
   nathan-app-site:
     container_name: nathan-app-site
     image: ghcr.io/ndemasie/nathan-app-site:latest
     restart: unless-stopped
+    networks:
+      - app-network
 
   nathan-edu-i18next-server:
     container_name: nathan-edu-i18next-server
     image: ghcr.io/ndemasie/nathan-edu-i18next-server:latest
     restart: unless-stopped
+    networks:
+      - app-network
 
   nathan-app-habit-print:
     container_name: nathan-app-habit-print
     image: ghcr.io/ndemasie/nathan-app-habit-print:latest
     restart: unless-stopped
+    networks:
+      - app-network
 
   nathan-app-refer-codes:
     container_name: nathan-app-refer-codes
     image: ghcr.io/ndemasie/nathan-app-refer-codes:latest
     restart: unless-stopped
+    networks:
+      - app-network

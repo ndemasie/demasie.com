@@ -1,3 +1,8 @@
+networks:
+  app-network:
+    name: app-network
+    external: true
+
 services:
   demasie-app-proxy:
     container_name: demasie-app-proxy
@@ -15,6 +20,8 @@ services:
       - ./packages/demasie-app-proxy/conf.d:/etc/nginx/conf.d:ro
       - ./packages/demasie-app-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./cert:/etc/nginx/cert:ro
+    networks:
+      - app-network
 
   nathan-app-site:
     container_name: nathan-app-site
@@ -25,6 +32,8 @@ services:
     volumes:
       - ./packages/nathan-app-site/src:/root/src:ro
       - ./packages/nathan-app-site/public:/root/public:ro
+    networks:
+      - app-network
 
   nathan-edu-i18next-server:
     container_name: nathan-edu-i18next-server
@@ -34,6 +43,8 @@ services:
     restart: always
     volumes:
       - ./packages/nathan-edu-i18next-server/src:/root/src:ro
+    networks:
+      - app-network
 
   nathan-app-habit-print:
     container_name: nathan-app-habit-print
@@ -43,6 +54,8 @@ services:
     restart: always
     volumes:
       - ./packages/nathan-app-habit-print/src:/root/src:ro
+    networks:
+      - app-network
 
   nathan-app-refer-codes:
     container_name: nathan-app-refer-codes
@@ -53,3 +66,5 @@ services:
     volumes:
       - ./packages/nathan-app-refer-codes/src:/root/src:ro
       - ./packages/nathan-app-refer-codes/public:/root/public:ro
+    networks:
+      - app-network
