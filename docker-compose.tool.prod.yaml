@@ -72,6 +72,16 @@ services:
     networks:
       - tool-network
 
+  nathan-mcp-brave-search:
+    container_name: nathan-mcp-brave-search
+    image: mcp/brave-search
+    ports:
+      - '8080:8080'
+    env_file: ./.env
+    restart: unless-stopped
+    networks:
+      - tool-network
+
   nathan-tool-n8n:
     container_name: nathan-tool-n8n
     build:
