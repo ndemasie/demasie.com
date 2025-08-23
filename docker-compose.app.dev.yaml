@@ -1,6 +1,6 @@
 networks:
-  app-network:
-    name: app-network
+  network-app:
+    name: network-app
     external: true
 
 services:
@@ -21,7 +21,7 @@ services:
       - ./packages/demasie-app-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./cert:/etc/nginx/cert:ro
     networks:
-      - app-network
+      - network-app
 
   nathan-app-site:
     container_name: nathan-app-site
@@ -33,7 +33,7 @@ services:
       - ./packages/nathan-app-site/src:/root/src:ro
       - ./packages/nathan-app-site/public:/root/public:ro
     networks:
-      - app-network
+      - network-app
 
   nathan-edu-i18next-server:
     container_name: nathan-edu-i18next-server
@@ -44,7 +44,7 @@ services:
     volumes:
       - ./packages/nathan-edu-i18next-server/src:/root/src:ro
     networks:
-      - app-network
+      - network-app
 
   nathan-app-habit-print:
     container_name: nathan-app-habit-print
@@ -55,7 +55,7 @@ services:
     volumes:
       - ./packages/nathan-app-habit-print/src:/root/src:ro
     networks:
-      - app-network
+      - network-app
 
   nathan-app-refer-codes:
     container_name: nathan-app-refer-codes
@@ -67,4 +67,4 @@ services:
       - ./packages/nathan-app-refer-codes/src:/root/src:ro
       - ./packages/nathan-app-refer-codes/public:/root/public:ro
     networks:
-      - app-network
+      - network-app

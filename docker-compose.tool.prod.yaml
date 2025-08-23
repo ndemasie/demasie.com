@@ -1,9 +1,9 @@
 networks:
-  mcp-network:
-    name: mcp-network
+  network-mcp:
+    name: network-mcp
     external: true
-  tool-network:
-    name: tool-network
+  network-tool:
+    name: network-tool
     external: true
 
 services:
@@ -38,7 +38,7 @@ services:
       - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - tool-network
+      - network-tool
 
   demasie-tool-watchtower:
     container_name: demasie-tool-watchtower
@@ -73,7 +73,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json
     networks:
-      - tool-network
+      - network-tool
 
   nathan-tool-n8n:
     container_name: nathan-tool-n8n
@@ -108,7 +108,7 @@ services:
       - ./.volume/nathan-tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
     networks:
-      - tool-network
+      - network-tool
 
   nathan-tool-postgres-ai:
     container_name: nathan-tool-postgres-ai
@@ -124,4 +124,4 @@ services:
     volumes:
       - ./.volume/nathan-tool-postgres:/var/lib/postgresql/data
     networks:
-      - tool-network
+      - network-tool

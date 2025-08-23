@@ -1,6 +1,6 @@
 networks:
-  app-network:
-    name: app-network
+  network-app:
+    name: network-app
     external: true
 
 services:
@@ -15,32 +15,32 @@ services:
       - '10400:10400' # nathan-app-refer-codes
     restart: unless-stopped
     networks:
-      - app-network
+      - network-app
 
   nathan-app-site:
     container_name: nathan-app-site
     image: ghcr.io/ndemasie/nathan-app-site:latest
     restart: unless-stopped
     networks:
-      - app-network
+      - network-app
 
   nathan-edu-i18next-server:
     container_name: nathan-edu-i18next-server
     image: ghcr.io/ndemasie/nathan-edu-i18next-server:latest
     restart: unless-stopped
     networks:
-      - app-network
+      - network-app
 
   nathan-app-habit-print:
     container_name: nathan-app-habit-print
     image: ghcr.io/ndemasie/nathan-app-habit-print:latest
     restart: unless-stopped
     networks:
-      - app-network
+      - network-app
 
   nathan-app-refer-codes:
     container_name: nathan-app-refer-codes
     image: ghcr.io/ndemasie/nathan-app-refer-codes:latest
     restart: unless-stopped
     networks:
-      - app-network
+      - network-app

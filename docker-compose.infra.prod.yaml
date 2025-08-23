@@ -1,9 +1,9 @@
 networks:
-  app-network:
-    name: app-network
+  network-app:
+    name: network-app
     external: true
-  tool-network:
-    name: tool-network
+  network-tool:
+    name: network-tool
     external: true
 
 services:
@@ -18,5 +18,5 @@ services:
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     networks:
-      - app-network
-      - tool-network
+      - network-app
+      - network-tool

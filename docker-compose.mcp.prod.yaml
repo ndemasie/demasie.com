@@ -1,6 +1,6 @@
 networks:
-  mcp-network:
-    name: mcp-network
+  network-mcp:
+    name: network-mcp
     external: true
 
 services:
@@ -12,7 +12,7 @@ services:
     env_file: ./.env
     restart: unless-stopped
     networks:
-      - mcp-network
+      - network-mcp
 
   mcp-time:
     container_name: mcp-time
@@ -22,4 +22,4 @@ services:
     ports:
       - '8090:8000'
     networks:
-      - mcp-network
+      - network-mcp
