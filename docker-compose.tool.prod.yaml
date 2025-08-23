@@ -38,6 +38,7 @@ services:
       - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
+      - network-mcp
       - network-tool
 
   demasie-tool-watchtower:
@@ -108,8 +109,8 @@ services:
       - ./.volume/nathan-tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
     networks:
-      - network-tool
       - network-mcp
+      - network-tool
 
   nathan-tool-postgres-ai:
     container_name: nathan-tool-postgres-ai
