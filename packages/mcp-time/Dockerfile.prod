@@ -1,0 +1,24 @@
+FROM mcp/time:latest
+
+# Install node & npm
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    npm \
+    curl
+
+RUN  npm install n -g && \
+    n 20
+
+# Install supergateway bridget for streamable
+RUN npm install -g supergateway
+
+ENV TZ=America/New_York
+
+EXPOSE 8000
+
+ENTRYPOINT [ \
+  "npx", "-y", "supergateway", \
+    "--stdio", "uvx mcp-server-time --local-timezone ${TZ}", \
+    "--outputTransport", "streamableHttp", \
+    "--port", "8000" \
+]
