@@ -108,6 +108,7 @@ services:
       - ./.volume/nathan-tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
     networks:
+      - network-mcp
       - network-tool
 
   nathan-tool-postgres-ai:
