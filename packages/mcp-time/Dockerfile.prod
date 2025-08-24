@@ -20,5 +20,6 @@ ENTRYPOINT [ \
   "npx", "-y", "supergateway", \
     "--stdio", "uvx mcp-server-time --local-timezone ${TZ}", \
     "--outputTransport", "streamableHttp", \
+    "--healthEndpoint", "/healthz", \
     "--port", "8000" \
 ]
