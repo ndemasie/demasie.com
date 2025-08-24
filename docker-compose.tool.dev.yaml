@@ -38,6 +38,7 @@ services:
       - ./.volume/demasie-tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
+      - network-mcp
       - network-tool
 
   nathan-tool-n8n:
