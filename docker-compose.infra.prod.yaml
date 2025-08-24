@@ -2,6 +2,9 @@ networks:
   network-app:
     name: network-app
     external: true
+  network-mcp:
+    name: network-mcp
+    external: true
   network-tool:
     name: network-tool
     external: true
@@ -19,4 +22,5 @@ services:
       - 'host.docker.internal:host-gateway'
     networks:
       - network-app
+      - network-mcp
       - network-tool
