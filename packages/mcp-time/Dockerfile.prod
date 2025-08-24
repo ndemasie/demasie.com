@@ -18,7 +18,7 @@ EXPOSE 8000
 
 ENTRYPOINT [ \
   "npx", "-y", "supergateway", \
-    "--stdio", "uvx mcp-server-time --local-timezone ${TZ}", \
+    "--stdio", "mcp-server-time --local-timezone ${TZ}", \
     "--outputTransport", "streamableHttp", \
     "--healthEndpoint", "/healthz", \
     "--port", "8000" \
