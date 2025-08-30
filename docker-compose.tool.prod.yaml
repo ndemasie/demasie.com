@@ -129,6 +129,6 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - ./.volume/tool-postgres:/var/lib/postgresql/data
+      - ./.volume/tool-postgres-ai:/var/lib/postgresql/data
     networks:
       - tool-network
