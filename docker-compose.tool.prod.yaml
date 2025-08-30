@@ -127,3 +127,23 @@ services:
       - ./.volume/nathan-tool-postgres:/var/lib/postgresql/data
     networks:
       - network-tool
+
+  mcp-brave-search:
+    container_name: mcp-brave-search
+    image: mcp/brave-search
+    ports:
+      - '8080:8080'
+    env_file: ./.env
+    restart: unless-stopped
+    networks:
+      - network-tool
+
+  mcp-time:
+    container_name: mcp-time
+    build:
+      context: ./packages/mcp-time
+      dockerfile: Dockerfile.prod
+    ports:
+      - '8000:8000'
+    networks:
+      - network-tool

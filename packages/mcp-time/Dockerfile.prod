@@ -20,7 +20,6 @@ ENTRYPOINT [ \
   "npx", "-y", "supergateway", \
     "--stdio", "mcp-server-time --local-timezone ${TZ}", \
     "--outputTransport", "streamableHttp", \
-    "--baseUrl", "http://mcp-time:8000", \
     "--healthEndpoint", "/healthz", \
     "--port", "8000" \
 ]
