@@ -4,67 +4,67 @@ networks:
     external: true
 
 services:
-  demasie-app-proxy:
-    container_name: demasie-app-proxy
+  app-proxy:
+    container_name: app-proxy
     build:
-      context: ./packages/demasie-app-proxy
+      context: ./packages/app-proxy
       dockerfile: Dockerfile.prod
     ports:
-      - '10100:10100' # nathan-app-site
-      - '10150:10150' # natalie-app-site
-      - '10200:10200' # nathan-edu-i18next-server
-      - '10300:10300' # nathan-app-habit-print
-      - '10400:10400' # nathan-app-refer-codes
+      - '10100:10100' # app-site
+      - '10150:10150' # app-natalie-site
+      - '10200:10200' # edu-i18next-server
+      - '10300:10300' # app-habit-print
+      - '10400:10400' # app-refer-codes
     restart: unless-stopped
     volumes:
-      - ./packages/demasie-app-proxy/conf.d:/etc/nginx/conf.d:ro
-      - ./packages/demasie-app-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./packages/app-proxy/conf.d:/etc/nginx/conf.d:ro
+      - ./packages/app-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./cert:/etc/nginx/cert:ro
     networks:
       - app-network
 
-  nathan-app-site:
-    container_name: nathan-app-site
+  app-site:
+    container_name: app-site
     build:
-      context: ./packages/nathan-app-site
+      context: ./packages/app-site
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/nathan-app-site/src:/root/src:ro
-      - ./packages/nathan-app-site/public:/root/public:ro
+      - ./packages/app-site/src:/root/src:ro
+      - ./packages/app-site/public:/root/public:ro
     networks:
       - app-network
 
-  nathan-edu-i18next-server:
-    container_name: nathan-edu-i18next-server
+  edu-i18next-server:
+    container_name: edu-i18next-server
     build:
-      context: ./packages/nathan-edu-i18next-server
+      context: ./packages/edu-i18next-server
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/nathan-edu-i18next-server/src:/root/src:ro
+      - ./packages/edu-i18next-server/src:/root/src:ro
     networks:
       - app-network
 
-  nathan-app-habit-print:
-    container_name: nathan-app-habit-print
+  app-habit-print:
+    container_name: app-habit-print
     build:
-      context: ./packages/nathan-app-habit-print
+      context: ./packages/app-habit-print
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/nathan-app-habit-print/src:/root/src:ro
+      - ./packages/app-habit-print/src:/root/src:ro
     networks:
       - app-network
 
-  nathan-app-refer-codes:
-    container_name: nathan-app-refer-codes
+  app-refer-codes:
+    container_name: app-refer-codes
     build:
-      context: ./packages/nathan-app-refer-codes
+      context: ./packages/app-refer-codes
       dockerfile: Dockerfile.dev
     restart: always
     volumes:
-      - ./packages/nathan-app-refer-codes/src:/root/src:ro
-      - ./packages/nathan-app-refer-codes/public:/root/public:ro
+      - ./packages/app-refer-codes/src:/root/src:ro
+      - ./packages/app-refer-codes/public:/root/public:ro
     networks:
       - app-network
