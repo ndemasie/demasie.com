@@ -1,0 +1,33 @@
+FROM mcp/time:latest
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    npm \
+    curl \
+    tzdata \
+ && rm -rf /var/lib/apt/lists/*
+
+# Upgrade Node to latest LTS
+RUN npm install -g n \
+ && n 20
+
+# Install supergateway globally
+RUN npm install -g supergateway
+
+# Set default timezone
+ENV LOCAL_TIMEZONE="America/New_York"
+ENV TZ="America/New_York"
+
+# Launch supergateway, ensuring tzdata is in the venv
+ENTRYPOINT [ "bash", "-c", "\
+if ! /app/.venv/bin/python -c 'import zoneinfo' &> /dev/null; then \
+    echo 'Installing tzdata in venv...'; \
+    /app/.venv/bin/pip install --no-cache-dir tzdata; \
+fi; \
+exec npx -y supergateway \
+    --stdio mcp-server-time \
+    --local-timezone \"America/New_York\" \
+    --outputTransport streamableHttp \
+    --healthEndpoint /healthz \
+    --port 8000" ]

@@ -8,13 +8,13 @@
 function compose() {
   local env=$1
   shift
-  local categories=(app tool infra)
+  local categories=(app infra mcp tool)
   local selected=()
 
   # Check if the next argument matches a category
-  for cat in "${categories[@]}"; do
-    if [[ $1 == $cat ]]; then
-      selected+=("$cat")
+  for category in "${categories[@]}"; do
+    if [[ $1 == "$category" ]]; then
+      selected+=("$category")
       shift
     fi
   done
@@ -25,12 +25,14 @@ function compose() {
   fi
 
   local files=()
-  for cat in "${selected[@]}"; do
-    local file="./compose.${cat}.${env}.yaml"
-    [[ -f $file ]] && files+=("-f" "$file")
+  for category in "${selected[@]}"; do
+    local file="./compose.${category}.${env}.yaml"
+    if [[ -f $file ]]; then
+      files+=("-f" "$file")
+    fi
   done
-  echo "docker compose ${files[@]} $@"
 
+  echo "docker compose ${files[@]} $@"
   docker compose "${files[@]}" "$@"
 }
 

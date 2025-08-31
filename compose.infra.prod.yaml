@@ -5,6 +5,9 @@ networks:
   tool-network:
     name: tool-network
     external: true
+  mcp-network:
+    name: mcp-network
+    external: true
 
 services:
   infra-cloudflared:
@@ -20,3 +23,4 @@ services:
     networks:
       - app-network
       - tool-network
+      - mcp-network

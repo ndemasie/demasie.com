@@ -1,4 +1,7 @@
 networks:
+  mcp-network:
+    name: mcp-network
+    external: true
   tool-network:
     name: tool-network
     external: true
@@ -35,16 +38,7 @@ services:
       - ./.volume/tool-proxy:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
-      - tool-network
-
-  mcp-brave-search:
-    container_name: mcp-brave-search
-    image: mcp/brave-search
-    ports:
-      - '8080:8080'
-    env_file: ./.env
-    restart: unless-stopped
-    networks:
+      - mcp-network
       - tool-network
 
   tool-n8n:
@@ -80,6 +74,7 @@ services:
       - ./.volume/tool-n8n:/home/node/.n8n
       - ./.volume/local-files:/files
     networks:
+      - mcp-network
       - tool-network
 
   tool-postgres-ai:
@@ -96,4 +91,26 @@ services:
     volumes:
       - ./.volume/tool-postgres:/var/lib/postgresql/data
     networks:
+      - tool-network
+
+  mcp-brave-search:
+    container_name: mcp-brave-search
+    image: mcp/brave-search
+    ports:
+      - '8080:8080'
+    env_file: ./.env
+    restart: unless-stopped
+    networks:
+      - mcp-network
+      - tool-network
+
+  mcp-time:
+    container_name: mcp-time
+    build:
+      context: ./packages/mcp-time
+      dockerfile: Dockerfile.prod
+    ports:
+      - '8000:8000'
+    networks:
+      - mcp-network
       - tool-network

@@ -4,8 +4,9 @@ node_modules/
 
 # .env
 .env
-.prod.env
-.production.env
+.*.env
+!.base.env
+
 # .conf
 .conf
 .prod.conf
