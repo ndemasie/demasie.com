@@ -26,7 +26,7 @@ function compose() {
 
   local files=()
   for cat in "${selected[@]}"; do
-    local file="./docker-compose.${cat}.${env}.yaml"
+    local file="./compose.${cat}.${env}.yaml"
     [[ -f $file ]] && files+=("-f" "$file")
   done
   echo "docker compose ${files[@]} $@"
