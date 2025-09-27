@@ -16,6 +16,7 @@ export const brands: Brand[] = [
   { key: 'prenuvo', name: 'Prenuvo', logoUrl: '/brands/prenuvo_wordmark.svg', theme: 'light' },
   { key: 'private-internet-access', name: 'Private Internet Access', logoUrl: '/brands/pia_wordmark.svg', theme: 'light'},
   { key: 'purple', name: 'Purple', logoUrl: '/brands/purple_wordmark.svg' },
+  { key: 'turbotax', name: 'TurboTax', logoUrl: '/brands/turbotax_wordmark.svg' },
   { key: 'uber', name: 'Uber', logoUrl: '/brands/uber_wordmark.svg', theme: 'light' },
   { key: 'wise', name: 'Wise', logoUrl: '/brands/wise_wordmark.svg' },
 ]
@@ -39,6 +40,7 @@ export const codes: Code[] = [
   { key: 'pia', brandKey: 'private-internet-access', description: 'Get 30 days free', url: 'https://www.privateinternetaccess.com/pages/buy-a-vpn/1218buyavpn?invite=U2FsdGVkX18P77qeez2G2JCh0J3YNx-hKan2ba92y9g%2CmsfRst0pmkdlVUDQZ33lJdCtHW0' },
   { key: 'prenuvo', brandKey: 'prenuvo', description: '$300 off full body scan', url: 'https://prenuvo.com/ref/UrKj1' },
   { key: 'purple', brandKey: 'purple', description: '10% off mattresses + 5% off accessories', url: 'https://share.purple.com/by/nathan_demasie' },
+  { key: 'turbotax', brandKey: 'turbotax', description: '20% off TurboTax federal products', url: 'https://refer.intuit.com/nathandemasie' },
   { key: 'uber', brandKey: 'uber', description: '50% off on your first 2 rides', url: 'https://referrals.uber.com/refer?id=kpa4dhkm1g9e' },
   { key: 'wise', brandKey: 'wise', description: 'Zero fees on a transfer up to €500', url: 'https://wise.com/invite/dic/nathand240' },
 ]
