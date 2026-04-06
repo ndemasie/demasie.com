@@ -37,63 +37,63 @@ services:
     networks:
       - tool-network
 
-  mcp-brave-search:
-    container_name: mcp-brave-search
-    image: mcp/brave-search
-    ports:
-      - '8080:8080'
-    env_file: ./.env
-    restart: unless-stopped
-    networks:
-      - tool-network
+  # mcp-brave-search:
+  #   container_name: mcp-brave-search
+  #   image: mcp/brave-search
+  #   ports:
+  #     - '8080:8080'
+  #   env_file: ./.env
+  #   restart: unless-stopped
+  #   networks:
+  #     - tool-network
 
-  tool-n8n:
-    container_name: tool-n8n
-    build:
-      context: ./packages/tool-n8n
-      dockerfile: Dockerfile
-    ports:
-      - '5678:5678'
-    restart: unless-stopped
-    env_file:
-      - ./packages/tool-n8n/.base.env
-      - ./packages/tool-n8n/.prod.env
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.tool-n8n.rule=Host(`tool-n8n.demasie.com`)
-      - traefik.http.routers.tool-n8n.tls=true
-      - traefik.http.routers.tool-n8n.entrypoints=https
-      - traefik.http.routers.tool-n8n.tls.certresolver=letsencrypt
-      - traefik.http.routers.tool-n8n.middlewares=tool-n8n@docker
-      - traefik.http.middlewares.tool-n8n.headers.SSLRedirect=true
-      - traefik.http.middlewares.tool-n8n.headers.STSSeconds=315360000
-      - traefik.http.middlewares.tool-n8n.headers.browserXSSFilter=true
-      - traefik.http.middlewares.tool-n8n.headers.contentTypeNosniff=true
-      - traefik.http.middlewares.tool-n8n.headers.forceSTSHeader=true
-      - traefik.http.middlewares.tool-n8n.headers.SSLHost=demasie.com
-      - traefik.http.middlewares.tool-n8n.headers.STSIncludeSubdomains=true
-      - traefik.http.middlewares.tool-n8n.headers.STSPreload=true
-      - traefik.http.services.tool-n8n.loadbalancer.server.port=5678
-      - traefik.http.services.tool-n8n.loadbalancer.server.scheme=http
-      - traefik.http.services.tool-n8n.loadbalancer.passHostHeader=true
-    volumes:
-      - ./.volume/tool-n8n:/home/node/.n8n
-      - ./.volume/local-files:/files
-    networks:
-      - tool-network
+  # tool-n8n:
+  #   container_name: tool-n8n
+  #   build:
+  #     context: ./packages/tool-n8n
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '5678:5678'
+  #   restart: unless-stopped
+  #   env_file:
+  #     - ./packages/tool-n8n/.base.env
+  #     - ./packages/tool-n8n/.prod.env
+  #   labels:
+  #     - traefik.enable=true
+  #     - traefik.http.routers.tool-n8n.rule=Host(`tool-n8n.demasie.com`)
+  #     - traefik.http.routers.tool-n8n.tls=true
+  #     - traefik.http.routers.tool-n8n.entrypoints=https
+  #     - traefik.http.routers.tool-n8n.tls.certresolver=letsencrypt
+  #     - traefik.http.routers.tool-n8n.middlewares=tool-n8n@docker
+  #     - traefik.http.middlewares.tool-n8n.headers.SSLRedirect=true
+  #     - traefik.http.middlewares.tool-n8n.headers.STSSeconds=315360000
+  #     - traefik.http.middlewares.tool-n8n.headers.browserXSSFilter=true
+  #     - traefik.http.middlewares.tool-n8n.headers.contentTypeNosniff=true
+  #     - traefik.http.middlewares.tool-n8n.headers.forceSTSHeader=true
+  #     - traefik.http.middlewares.tool-n8n.headers.SSLHost=demasie.com
+  #     - traefik.http.middlewares.tool-n8n.headers.STSIncludeSubdomains=true
+  #     - traefik.http.middlewares.tool-n8n.headers.STSPreload=true
+  #     - traefik.http.services.tool-n8n.loadbalancer.server.port=5678
+  #     - traefik.http.services.tool-n8n.loadbalancer.server.scheme=http
+  #     - traefik.http.services.tool-n8n.loadbalancer.passHostHeader=true
+  #   volumes:
+  #     - ./.volume/tool-n8n:/home/node/.n8n
+  #     - ./.volume/local-files:/files
+  #   networks:
+  #     - tool-network
 
-  tool-postgres-ai:
-    container_name: tool-postgres-ai
-    image: postgres:15
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      POSTGRES_DB: ${POSTGRES_AI_DB}
-      POSTGRES_USER: ${POSTGRES_AI_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_AI_PASSWORD}
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./.volume/tool-postgres:/var/lib/postgresql/data
-    networks:
-      - tool-network
+  # tool-postgres-ai:
+  #   container_name: tool-postgres-ai
+  #   image: postgres:15
+  #   restart: unless-stopped
+  #   env_file: ./.env
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_AI_DB}
+  #     POSTGRES_USER: ${POSTGRES_AI_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_AI_PASSWORD}
+  #   ports:
+  #     - '5432:5432'
+  #   volumes:
+  #     - ./.volume/tool-postgres:/var/lib/postgresql/data
+  #   networks:
+  #     - tool-network
