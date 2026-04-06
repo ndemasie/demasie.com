@@ -35,6 +35,26 @@ for file in "${COMPOSE_FILES[@]}"; do
   curl -fsSL "${BASE_URL}/${file}" -o "$file"
 done
 
+# ── Download dashboard (optional) ─────────────────────────────────────────────
+
+DASHBOARD_FILES=(
+  tools/dashboard/main.py
+  tools/dashboard/container_widget.py
+  tools/dashboard/hardware_widget.py
+  tools/dashboard/process_widget.py
+  tools/dashboard/timer_widget.py
+  tools/dashboard/website_widget.py
+)
+
+read -p "Download the dashboard tools? (y/N): " install_dashboard
+if [[ "$install_dashboard" == "y" ]]; then
+  mkdir -p tools/dashboard
+  for file in "${DASHBOARD_FILES[@]}"; do
+    echo "Downloading $file ..."
+    curl -fsSL "${BASE_URL}/${file}" -o "$file"
+  done
+fi
+
 # ── Check .env file ────────────────────────────────────────────────────────────
 
 if [[ ! -f .env ]]; then
@@ -75,3 +95,12 @@ echo "docker compose ${compose_args[@]} up --detach --pull always"
 docker compose "${compose_args[@]}" up --detach --pull always
 
 echo -e "\033[0;32mDone.\033[0m"
+
+# ── Start dashboard (optional) ─────────────────────────────────────────────────
+
+if [[ -f tools/dashboard/main.py ]]; then
+  read -p "Start the dashboard? (y/N): " start_dashboard
+  if [[ "$start_dashboard" == "y" ]]; then
+    python3 tools/dashboard/main.py
+  fi
+fi
