@@ -9,7 +9,7 @@ GITHUB_REPO="demasie.com"
 GHCR_USER="ndemasie"
 
 BASE_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main"
-INSTALL_DIR="${INSTALL_DIR:-$HOME/}"
+INSTALL_DIR="${INSTALL_DIR:-$HOME/$GITHUB_REPO}"
 
 COMPOSE_FILES=(
   compose.app.prod.yaml
@@ -46,7 +46,7 @@ DASHBOARD_FILES=(
   tools/dashboard/website_widget.py
 )
 
-read -p "Download the dashboard tools? (y/N): " install_dashboard
+read -p "Download the dashboard tools? (y/N): " install_dashboard </dev/tty
 if [[ "$install_dashboard" == "y" ]]; then
   mkdir -p tools/dashboard
   for file in "${DASHBOARD_FILES[@]}"; do
@@ -62,7 +62,7 @@ if [[ ! -f .env ]]; then
   exit 1
 fi
 
-read -p "Have you loaded the .env file with all required values? (y/N): " confirm_env
+read -p "Have you loaded the .env file with all required values? (y/N): " confirm_env </dev/tty
 if [[ "$confirm_env" != "y" ]]; then
   echo "Please load the .env file and re-run the script."
   exit 1
@@ -99,7 +99,7 @@ echo -e "\033[0;32mDone.\033[0m"
 # ── Start dashboard (optional) ─────────────────────────────────────────────────
 
 if [[ -f tools/dashboard/main.py ]]; then
-  read -p "Start the dashboard? (y/N): " start_dashboard
+  read -p "Start the dashboard? (y/N): " start_dashboard </dev/tty
   if [[ "$start_dashboard" == "y" ]]; then
     python3 tools/dashboard/main.py
   fi
