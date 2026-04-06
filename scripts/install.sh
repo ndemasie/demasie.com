@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/ndemasie/demasie.com/main/scripts/install.sh | bash
-#
-# Or download and run directly:
-#   curl -fsSL https://raw.githubusercontent.com/ndemasie/demasie.com/main/scripts/install.sh -o install.sh && bash install.sh
 
 set -euo pipefail
 
@@ -38,6 +35,19 @@ for file in "${COMPOSE_FILES[@]}"; do
   curl -fsSL "${BASE_URL}/${file}" -o "$file"
 done
 
+# ── Check .env file ────────────────────────────────────────────────────────────
+
+if [[ ! -f .env ]]; then
+  echo -e "\033[0;31mError\033[0m: .env file not found. Please create and populate the .env file before proceeding."
+  exit 1
+fi
+
+read -p "Have you loaded the .env file with all required values? (y/N): " confirm_env
+if [[ "$confirm_env" != "y" ]]; then
+  echo "Please load the .env file and re-run the script."
+  exit 1
+fi
+
 # ── Docker networks ────────────────────────────────────────────────────────────
 
 for network in "${DOCKER_NETWORKS[@]}"; do
@@ -61,6 +71,7 @@ for file in "${COMPOSE_FILES[@]}"; do
 done
 
 echo "Starting production services ..."
-docker compose "${compose_args[@]}" up -d --pull always
+echo "docker compose ${compose_args[@]} up --detach --pull always"
+docker compose "${compose_args[@]}" up --detach --pull always
 
-echo "Done."
+echo -e "\033[0;32mDone.\033[0m"
