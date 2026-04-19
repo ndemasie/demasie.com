@@ -46,17 +46,23 @@ if [[ "$confirm_service_env" != "y" ]]; then
   exit 1
 fi
 
-for file in "${COMPOSE_FILES[@]}"; do
-  echo "Downloading $file ..."
-  curl -fsSL "${BASE_URL}/${file}" -o "$file"
-done
+read -p "Download service compose files? (y/N): " confirm_service_download </dev/tty
+if [[ "$confirm_service_download" == "y" ]]; then
+  for file in "${COMPOSE_FILES[@]}"; do
+    echo "Downloading $file ..."
+    curl -fsSL "${BASE_URL}/${file}" -o "$file"
+  done
+fi
 
-for network in "${DOCKER_NETWORKS[@]}"; do
-  if ! docker network ls --format '{{.Name}}' | grep -qx "$network"; then
-    echo "Creating Docker network: $network"
-    docker network create "$network"
-  fi
-done
+read -p "Setup docker networks? (y/N): " confirm_service_network_create </dev/tty
+if [[ "$confirm_service_network_create" == "y" ]]; then
+  for network in "${DOCKER_NETWORKS[@]}"; do
+    if ! docker network ls --format '{{.Name}}' | grep -qx "$network"; then
+      echo "Creating Docker network: $network"
+      docker network create "$network"
+    fi
+  done
+fi
 
 read -p "Start services? (y/N): " confirm_service_start </dev/tty
 if [[ "$confirm_service_start" == "y" ]]; then
@@ -83,8 +89,8 @@ DASHBOARD_FILES=(
   tools/dashboard/widget_website.py
 )
 
-read -p "Download the dashboard tools? (y/N): " confirm_dashboard_install </dev/tty
-if [[ "$confirm_dashboard_install" == "y" ]]; then
+read -p "Download dashboard tools? (y/N): " confirm_dashboard_download </dev/tty
+if [[ "$confirm_dashboard_download" == "y" ]]; then
   rm -rf tools/dashboard
   mkdir -p tools/dashboard
   for file in "${DASHBOARD_FILES[@]}"; do
@@ -94,7 +100,7 @@ if [[ "$confirm_dashboard_install" == "y" ]]; then
 fi
 
 if [[ -f tools/dashboard/main.py ]]; then
-  read -p "Start the dashboard? (y/N): " confirm_dashboard_start </dev/tty
+  read -p "Start dashboard? (y/N): " confirm_dashboard_start </dev/tty
   if [[ "$confirm_dashboard_start" == "y" ]]; then
     python3 tools/dashboard/main.py
   fi
