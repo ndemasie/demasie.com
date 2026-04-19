@@ -17,7 +17,6 @@ COPY ./package-lock.json ./
 COPY ./astro.config.mjs ./
 COPY ./components.json ./
 COPY ./tsconfig.json ./
-COPY ./tailwind.config.mjs ./
 
 RUN npm install
 

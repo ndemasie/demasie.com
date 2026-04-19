@@ -19,7 +19,6 @@ RUN npm ci --include=dev
 COPY ./astro.config.mjs ./
 COPY ./components.json ./
 COPY ./tsconfig.json ./
-COPY ./tailwind.config.mjs ./
 COPY ./public ./public
 COPY ./src ./src
 
