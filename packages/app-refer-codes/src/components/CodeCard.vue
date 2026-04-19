@@ -5,7 +5,7 @@ import { ExternalLinkIcon } from '@radix-icons/vue'
 import Card from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import type { Code } from '@/data/codes'
-import { store } from '@/stores/store.ts'
+import { store, searchParams } from '@/stores/store.ts'
 
 const props = defineProps<{
   codeKey: Code['key']
@@ -16,7 +16,7 @@ const code = computed(() => store.codeByKey[props.codeKey])
 const brand = computed(() => store.brandByKey[code.value.brandKey])
 
 const onSelect = () => {
-  if (code.value) store.setSelectedCodeKey(code.value.key)
+  if (code.value) searchParams.code = code.value.key
 }
 </script>
 

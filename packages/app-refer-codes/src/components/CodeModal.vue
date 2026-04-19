@@ -10,9 +10,11 @@ import { Label } from '@/components/ui/label'
 import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
 import { computed } from 'vue'
 
-import { store } from '@/stores/store.ts'
-
-const code = computed(() => store.codeByKey[store.selectedCodeKey])
+import { store, searchParams } from '@/stores/store.ts'
+const code = computed(() => {
+  const key = searchParams.code as string | null
+  return key && key in store.codeByKey ? store.codeByKey[key] : undefined
+})
 const brand = computed(() => store.brandByKey[code.value?.brandKey])
 
 const isOpen = computed(() => !!code?.value)
@@ -21,7 +23,7 @@ const onUpdate = (open) => {
   onClose()
 }
 const onClose = () => {
-  store.setSelectedCodeKey(null)
+  delete searchParams.code
 }
 
 const isDesktop = useMediaQuery('(min-width: 768px)')
