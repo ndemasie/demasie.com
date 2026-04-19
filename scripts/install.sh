@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/ndemasie/demasie.com/main/scripts/install.sh | bash
+#   curl -fsSL -H "Cache-Control: no-cache" https://raw.githubusercontent.com/ndemasie/demasie.com/main/scripts/install.sh | bash
 
 set -euo pipefail
 
@@ -50,7 +50,7 @@ read -p "Download service compose files? (y/N): " confirm_service_download </dev
 if [[ "$confirm_service_download" == "y" ]]; then
   for file in "${COMPOSE_FILES[@]}"; do
     echo "Downloading $file ..."
-    curl -fsSL "${BASE_URL}/${file}" -o "$file"
+    curl -fsSL -H "Cache-Control: no-cache" "${BASE_URL}/${file}" -o "$file"
   done
 fi
 
@@ -95,7 +95,7 @@ if [[ "$confirm_dashboard_download" == "y" ]]; then
   mkdir -p tools/dashboard
   for file in "${DASHBOARD_FILES[@]}"; do
     echo "Downloading $file ..."
-    curl -fsSL "${BASE_URL}/${file}" -o "$file"
+    curl -fsSL -H "Cache-Control: no-cache" "${BASE_URL}/${file}" -o "$file"
   done
 fi
 
