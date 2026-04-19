@@ -1,11 +1,11 @@
 import curses
 import time
 import threading
-from tools.dashboard.widget_container import WidgetContainer
-from tools.dashboard.widget_website import WidgetWebsite
-from tools.dashboard.widget_hardware import WidgetHardware
-from tools.dashboard.widget_process import WidgetProcess
-from tools.dashboard.widget_timer import WidgetTimer
+from widget_container import WidgetContainer
+from widget_website import WidgetWebsite
+from widget_hardware import WidgetHardware
+from widget_process import WidgetProcess
+from widget_timer import WidgetTimer
 from typing import Any
 
 class MonitorApp:
