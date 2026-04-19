@@ -6,10 +6,17 @@ set -euo pipefail
 
 GITHUB_USER="ndemasie"
 GITHUB_REPO="demasie.com"
-GHCR_USER="ndemasie"
 
 BASE_URL="https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/$GITHUB_REPO}"
+
+# ── Setup ──────────────────────────────────────────────────────────────────────
+
+echo "Installing to $INSTALL_DIR ..."
+mkdir -p "$INSTALL_DIR"
+cd "$INSTALL_DIR"
+
+# ── Apps ────────────────────────────────────────────────────────────────────────
 
 COMPOSE_FILES=(
   compose.app.prod.yaml
@@ -22,53 +29,27 @@ DOCKER_NETWORKS=(
   tool-network
 )
 
-# ── Setup ──────────────────────────────────────────────────────────────────────
+GHCR_USER="ndemasie"
 
-echo "Installing to $INSTALL_DIR ..."
-mkdir -p "$INSTALL_DIR"
-cd "$INSTALL_DIR"
-
-# ── Download compose files ─────────────────────────────────────────────────────
-
-for file in "${COMPOSE_FILES[@]}"; do
-  echo "Downloading $file ..."
-  curl -fsSL "${BASE_URL}/${file}" -o "$file"
-done
-
-# ── Download dashboard (optional) ─────────────────────────────────────────────
-
-DASHBOARD_FILES=(
-  tools/dashboard/main.py
-  tools/dashboard/container_widget.py
-  tools/dashboard/hardware_widget.py
-  tools/dashboard/process_widget.py
-  tools/dashboard/timer_widget.py
-  tools/dashboard/website_widget.py
-)
-
-read -p "Download the dashboard tools? (y/N): " install_dashboard </dev/tty
-if [[ "$install_dashboard" == "y" ]]; then
-  mkdir -p tools/dashboard
-  for file in "${DASHBOARD_FILES[@]}"; do
-    echo "Downloading $file ..."
-    curl -fsSL "${BASE_URL}/${file}" -o "$file"
-  done
+if [[ -n "${GITHUB_GHCR_PAT:-}" ]]; then
+  echo "$GITHUB_GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
 fi
-
-# ── Check .env file ────────────────────────────────────────────────────────────
 
 if [[ ! -f .env ]]; then
   echo -e "\033[0;31mError\033[0m: .env file not found. Please create and populate the .env file before proceeding."
   exit 1
 fi
 
-read -p "Have you loaded the .env file with all required values? (y/N): " confirm_env </dev/tty
-if [[ "$confirm_env" != "y" ]]; then
+read -p "Have you loaded the .env file with all required values? (y/N): " confirm_service_env </dev/tty
+if [[ "$confirm_service_env" != "y" ]]; then
   echo "Please load the .env file and re-run the script."
   exit 1
 fi
 
-# ── Docker networks ────────────────────────────────────────────────────────────
+for file in "${COMPOSE_FILES[@]}"; do
+  echo "Downloading $file ..."
+  curl -fsSL "${BASE_URL}/${file}" -o "$file"
+done
 
 for network in "${DOCKER_NETWORKS[@]}"; do
   if ! docker network ls --format '{{.Name}}' | grep -qx "$network"; then
@@ -77,30 +58,44 @@ for network in "${DOCKER_NETWORKS[@]}"; do
   fi
 done
 
-# ── GHCR login ─────────────────────────────────────────────────────────────────
+read -p "Start services? (y/N): " confirm_service_start </dev/tty
+if [[ "$confirm_service_start" == "y" ]]; then
+  compose_args=()
+  for file in "${COMPOSE_FILES[@]}"; do
+    compose_args+=("-f" "$file")
+  done
 
-if [[ -n "${GITHUB_GHCR_PAT:-}" ]]; then
-  echo "$GITHUB_GHCR_PAT" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+  echo "Starting production services ..."
+  echo "docker compose ${compose_args[@]} up --detach --pull always"
+  docker compose "${compose_args[@]}" up --detach --pull always
+
+  echo -e "\033[0;32mDone.\033[0m"
 fi
 
-# ── Start services ─────────────────────────────────────────────────────────────
+# ── Dashboard  ────────────────────────────────────────────────────────────────
 
-compose_args=()
-for file in "${COMPOSE_FILES[@]}"; do
-  compose_args+=("-f" "$file")
-done
+DASHBOARD_FILES=(
+  tools/dashboard/main.py
+  tools/dashboard/widget_container.py
+  tools/dashboard/widget_hardware.py
+  tools/dashboard/widget_process.py
+  tools/dashboard/widget_timer.py
+  tools/dashboard/widget_website.py
+)
 
-echo "Starting production services ..."
-echo "docker compose ${compose_args[@]} up --detach --pull always"
-docker compose "${compose_args[@]}" up --detach --pull always
-
-echo -e "\033[0;32mDone.\033[0m"
-
-# ── Start dashboard (optional) ─────────────────────────────────────────────────
+read -p "Download the dashboard tools? (y/N): " confirm_dashboard_install </dev/tty
+if [[ "$confirm_dashboard_install" == "y" ]]; then
+  rm -rf tools/dashboard
+  mkdir -p tools/dashboard
+  for file in "${DASHBOARD_FILES[@]}"; do
+    echo "Downloading $file ..."
+    curl -fsSL "${BASE_URL}/${file}" -o "$file"
+  done
+fi
 
 if [[ -f tools/dashboard/main.py ]]; then
-  read -p "Start the dashboard? (y/N): " start_dashboard </dev/tty
-  if [[ "$start_dashboard" == "y" ]]; then
+  read -p "Start the dashboard? (y/N): " confirm_dashboard_start </dev/tty
+  if [[ "$confirm_dashboard_start" == "y" ]]; then
     python3 tools/dashboard/main.py
   fi
 fi

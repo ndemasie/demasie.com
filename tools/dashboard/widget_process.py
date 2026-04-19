@@ -3,7 +3,7 @@ import time
 import psutil
 from typing import List, Any, Optional
 
-class ProcessWidget:
+class WidgetProcess:
     def __init__(self, stdscr: 'curses._CursesWindow') -> None:
         self.stdscr: 'curses._CursesWindow' = stdscr
 

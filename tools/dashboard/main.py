@@ -1,11 +1,11 @@
 import curses
 import time
 import threading
-from container_widget import ContainerWidget
-from website_widget import WebsiteWidget
-from hardware_widget import HardwareWidget
-from process_widget import ProcessWidget
-from timer_widget import TimerWidget
+from tools.dashboard.widget_container import WidgetContainer
+from tools.dashboard.widget_website import WidgetWebsite
+from tools.dashboard.widget_hardware import WidgetHardware
+from tools.dashboard.widget_process import WidgetProcess
+from tools.dashboard.widget_timer import WidgetTimer
 from typing import Any
 
 class MonitorApp:
@@ -13,13 +13,13 @@ class MonitorApp:
         self.stdscr: 'curses._CursesWindow' = stdscr
         self.stdscr.nodelay(True)  # Make getch non-blocking
 
-        self.setup_curses()
+        self._setup_curses()
 
-        self.container_widget = ContainerWidget(self.stdscr)
-        self.hardware_widget = HardwareWidget(self.stdscr)
-        # self.process_widget = ProcessWidget(self.stdscr)
-        self.timer_widget = TimerWidget(self.stdscr)
-        self.website_widget = WebsiteWidget(self.stdscr)
+        self.widget_container = WidgetContainer(self.stdscr)
+        self.widget_hardware = WidgetHardware(self.stdscr)
+        # self.widget_process = WidgetProcess(self.stdscr)
+        self.widget_timer = WidgetTimer(self.stdscr)
+        self.widget_website = WidgetWebsite(self.stdscr)
 
         self._run_background_updates()
 
@@ -31,13 +31,13 @@ class MonitorApp:
                 widget.update(time.time())
                 time.sleep(interval)
 
-        threading.Thread(target=updater, args=(self.hardware_widget, 1, 0), daemon=True).start()
-        # threading.Thread(target=updater, args=(self.process_widget, 3, 2), daemon=True).start()
-        threading.Thread(target=updater, args=(self.website_widget, 1, 0), daemon=True).start()
-        threading.Thread(target=updater, args=(self.container_widget, 3, 4), daemon=True).start()
-        threading.Thread(target=updater, args=(self.timer_widget, 0.5, 0), daemon=True).start()
+        threading.Thread(target=updater, args=(self.widget_hardware, 1, 0), daemon=True).start()
+        # threading.Thread(target=updater, args=(self.widget_process, 3, 2), daemon=True).start()
+        threading.Thread(target=updater, args=(self.widget_website, 1, 0), daemon=True).start()
+        threading.Thread(target=updater, args=(self.widget_container, 3, 4), daemon=True).start()
+        threading.Thread(target=updater, args=(self.widget_timer, 0.5, 0), daemon=True).start()
 
-    def setup_curses(self) -> None:
+    def _setup_curses(self) -> None:
         curses.curs_set(0)  # Hide cursor
 
         curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BLACK)
@@ -49,20 +49,21 @@ class MonitorApp:
 
         curses.init_pair(10, curses.COLOR_WHITE, curses.COLOR_BLACK)
 
-    def draw(self) -> None:
+    def _draw(self) -> None:
         row = 0
-        row = self.hardware_widget.draw(row)
-        # row = self.process_widget.draw(row)
-        row = self.website_widget.draw(row)
-        row = self.container_widget.draw(row)
-        row = self.timer_widget.draw(row)
+        row = self.widget_hardware.draw(row)
+        # row = self.widget_process.draw(row)
+        row = self.widget_website.draw(row)
+        row = self.widget_container.draw(row)
+        row = self.widget_timer.draw(row)
         self.stdscr.refresh()
 
     def run(self) -> None:
         self.stdscr.clear()
         last_draw = time.time()
         last_clear = time.time()
-        self.draw()  # Initial draw
+
+        self._draw()  # Initial draw
 
         while True:
             now = time.time()
@@ -75,12 +76,12 @@ class MonitorApp:
 
             # If key is pressed
             if key != -1:
-                self.timer_widget.handle_input(key, now)
-                self.timer_widget.draw()
+                self.widget_timer.handle_input(key, now)
+                self.widget_timer.draw()
 
             # If second has passed
             if now - last_draw >= 1:
-                self.draw()
+                self._draw()
                 last_draw = now
 
             time.sleep(0.05)

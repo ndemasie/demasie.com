@@ -4,7 +4,7 @@ import re
 import time
 from typing import List, Tuple, Optional
 
-class ContainerWidget:
+class WidgetContainer:
     def __init__(self, stdscr: 'curses._CursesWindow') -> None:
         self.stdscr: 'curses._CursesWindow' = stdscr
 

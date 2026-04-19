@@ -4,7 +4,7 @@ import os
 import time
 from typing import Any, Optional
 
-class HardwareWidget:
+class WidgetHardware:
     def __init__(self, stdscr: 'curses._CursesWindow') -> None:
         self.stdscr: 'curses._CursesWindow' = stdscr
 

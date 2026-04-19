@@ -4,27 +4,34 @@ import requests
 import urllib
 from typing import Dict, List, Tuple, Optional
 
-class WebsiteWidget:
+class WidgetWebsite:
+    CONF_SITES_URL = "https://raw.githubusercontent.com/ndemasie/demasie.com/refs/heads/main/tools/dashboard/widget_website.conf"
+
     def __init__(self, stdscr) -> None:
         self.stdscr = stdscr
 
         self.row: Optional[int] = None
         self.cache_index: int = 0
-        self.cache: Dict[str, int] = {
-            "https://lieblinghomecare.com": 0,
-            "https://demasie.com/health": 0,
-            # "https://ssh.demasie.com": 0,
-            # "https://ftp.demasie.com": 0,
-            "https://nathan.demasie.com/health": 0,
-            "https://habit.demasie.com/health": 0,
-            "https://refer.demasie.com/health": 0,
-            "https://app-habit-print.demasie.com/health": 0,
-            "https://app-refer-codes.demasie.com/health": 0,
-            "https://app-site.demasie.com/health": 0,
-            "https://edu-i18next-server.demasie.com/health": 0,
-            "https://tool-n8n.demasie.com/healthz": 0
+        self.last_loaded: float = 0
+        self.cache: Dict[str, int] = {}
+        self.keys: List[str] = []
+        self._load_sites()
+
+    def _load_sites(self) -> None:
+        try:
+            response = requests.get(self.CONF_SITES_URL, timeout=5)
+            response.raise_for_status()
+            lines = response.text.splitlines()
+        except requests.RequestException:
+            lines = []
+
+        self.cache = {
+            line.strip(): 0
+            for line in lines
+            if line.strip() and not line.strip().startswith("#")
         }
-        self.keys: List[str] = list(self.cache.keys())
+        self.keys = list(self.cache.keys())
+        self.last_loaded = time.time()
 
     @staticmethod
     def get_website_status(url: str) -> int:
@@ -45,6 +52,8 @@ class WebsiteWidget:
             return curses.color_pair(5) | curses.A_REVERSE, "ERROR".center(6), display_url
 
     def update(self, time: float = time.time()) -> None:
+        if time - self.last_loaded >= 86400:
+            self._load_sites()
         website_url: str = self.keys[self.cache_index % len(self.keys)]
         self.cache[website_url] = self.get_website_status(website_url)
         self.cache_index += 1

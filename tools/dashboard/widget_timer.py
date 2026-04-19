@@ -7,7 +7,7 @@ class TimerButton(Enum):
     START_STOP = 0
     RESET = 1
 
-class TimerWidget:
+class WidgetTimer:
 
     def __init__(self, stdscr: 'curses._CursesWindow') -> None:
         self.stdscr: 'curses._CursesWindow' = stdscr
