@@ -3,25 +3,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import { ExternalLinkIcon } from '@radix-icons/vue'
 
 import { Button } from '@/components/ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from '@/components/ui/dialog'
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer'
+import Dialog from '@/components/ui/dialog'
+import Drawer from '@/components/ui/drawer'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { createReusableTemplate, useMediaQuery } from '@vueuse/core'
@@ -57,15 +40,15 @@ const [UseCardDetails, CardDetails] = createReusableTemplate()
   </UseCardDetails>
 
   <Dialog v-if="isDesktop" :open="isOpen" @update:open="onUpdate">
-    <DialogContent class="sm:max-w-[425px] h-40lvh">
-      <DialogHeader class="mt-2">
+    <Dialog.Content class="sm:max-w-[425px] h-40lvh">
+      <Dialog.Header class="mt-2">
         <div class="brand-logo my-2" :style="logoStyles"></div>
 
-        <DialogTitle class="my-2">{{ code?.description }}</DialogTitle>
-      </DialogHeader>
+        <Dialog.Title class="my-2">{{ code?.description }}</Dialog.Title>
+      </Dialog.Header>
 
-      <!-- <DialogDescription>{{ brand.name }}</DialogDescription> -->
-      <DialogFooter class="flex justify-between items-center">
+      <!-- <Dialog.Description>{{ brand.name }}</Dialog.Description> -->
+      <Dialog.Footer class="flex justify-between items-center">
         <Button class="my-2" variant="outline" @click="onClose">Close</Button>
 
         <a v-if="code?.url" :href="code.url" target="_blank">
@@ -73,20 +56,20 @@ const [UseCardDetails, CardDetails] = createReusableTemplate()
             >Get deal <ExternalLinkIcon class="w-4 h-4 mr-2"
           /></Button>
         </a>
-      </DialogFooter>
-    </DialogContent>
+      </Dialog.Footer>
+    </Dialog.Content>
   </Dialog>
 
   <Drawer v-else :open="isOpen" @update:open="onUpdate">
-    <DrawerContent class="pl-6 pr-6">
-      <DrawerHeader>
+    <Drawer.Content class="pl-6 pr-6">
+      <Drawer.Header>
         <div class="brand-logo my-2" :style="logoStyles"></div>
 
-        <DrawerTitle class="my-2">{{ code?.description }}</DrawerTitle>
-      </DrawerHeader>
+        <Drawer.Title class="my-2">{{ code?.description }}</Drawer.Title>
+      </Drawer.Header>
 
-      <!-- <DrawerDescription>{{ brand.name }}</DrawerDescription> -->
-      <DrawerFooter class="mb-6">
+      <!-- <Drawer.Description>{{ brand.name }}</Drawer.Description> -->
+      <Drawer.Footer class="mb-6">
         <a v-if="code?.url" :href="code.url" target="_blank">
           <Button class="my-2 w-full" @click="onClose"
             >Get deal <ExternalLinkIcon class="w-4 h-4 mr-2"
@@ -96,8 +79,8 @@ const [UseCardDetails, CardDetails] = createReusableTemplate()
         <Button class="my-2 w-full" variant="outline" @click="onClose"
           >Close</Button
         >
-      </DrawerFooter>
-    </DrawerContent>
+      </Drawer.Footer>
+    </Drawer.Content>
   </Drawer>
 </template>
 

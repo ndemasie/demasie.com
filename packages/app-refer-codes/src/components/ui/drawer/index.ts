@@ -1,8 +1,27 @@
-export { default as Drawer } from './Drawer.vue'
-export { default as DrawerContent } from './DrawerContent.vue'
-export { default as DrawerDescription } from './DrawerDescription.vue'
-export { default as DrawerFooter } from './DrawerFooter.vue'
-export { default as DrawerHeader } from './DrawerHeader.vue'
-export { default as DrawerOverlay } from './DrawerOverlay.vue'
-export { default as DrawerTitle } from './DrawerTitle.vue'
+import Drawer from './Drawer.vue'
+import DrawerContent from './DrawerContent.vue'
+import DrawerDescription from './DrawerDescription.vue'
+import DrawerFooter from './DrawerFooter.vue'
+import DrawerHeader from './DrawerHeader.vue'
+import DrawerOverlay from './DrawerOverlay.vue'
+import DrawerTitle from './DrawerTitle.vue'
 export { DrawerClose, DrawerPortal, DrawerTrigger } from 'vaul-vue'
+
+export default Object.assign(Drawer, {
+  Content: DrawerContent,
+  Description: DrawerDescription,
+  Footer: DrawerFooter,
+  Header: DrawerHeader,
+  Overlay: DrawerOverlay,
+  Title: DrawerTitle,
+})
+
+export {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerTitle,
+}
