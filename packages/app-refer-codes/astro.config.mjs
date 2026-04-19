@@ -1,6 +1,6 @@
 import node from '@astrojs/node'
-import tailwind from '@astrojs/tailwind'
 import vue from '@astrojs/vue'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'astro/config'
 
 import packageJson from './package.json' assert { type: 'json' }
@@ -11,11 +11,12 @@ export default defineConfig({
   srcDir: './src',
   publicDir: './public',
   outDir: './dist',
-  integrations: [tailwind(), vue()],
+  integrations: [vue()],
   trailingSlash: 'ignore',
 
   // SSR
   adapter: node({ mode: 'standalone' }),
+
   output: 'server',
 
   site:
@@ -26,5 +27,9 @@ export default defineConfig({
   server: {
     host: process.env.HOST || '0.0.0.0',
     port: parseInt(process.env.PORT, 10) || 10400,
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 })
