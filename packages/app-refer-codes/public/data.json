@@ -3,7 +3,8 @@
     {
       "key": "airbnb",
       "name": "Airbnb",
-      "logoUrl": "/brands/airbnb_wordmark.svg"
+      "logoUrl": "/brands/airbnb_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "chase",
@@ -14,22 +15,26 @@
     {
       "key": "coinbase",
       "name": "coinbase",
-      "logoUrl": "/brands/coinbase_wordmark.svg"
+      "logoUrl": "/brands/coinbase_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "doordash",
       "name": "DoorDash",
-      "logoUrl": "/brands/doordash_wordmark.svg"
+      "logoUrl": "/brands/doordash_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "lyft",
       "name": "Lyft",
-      "logoUrl": "/brands/lyft_wordmark.svg"
+      "logoUrl": "/brands/lyft_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "mint-mobile",
       "name": "Mint Mobile",
-      "logoUrl": "/brands/mint_mobile_wordmark.svg"
+      "logoUrl": "/brands/mint_mobile_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "prenuvo",
@@ -38,7 +43,7 @@
       "theme": "light"
     },
     {
-      "key": "private-internet-access",
+      "key": "pia",
       "name": "Private Internet Access",
       "logoUrl": "/brands/pia_wordmark.svg",
       "theme": "light"
@@ -46,12 +51,14 @@
     {
       "key": "purple",
       "name": "Purple",
-      "logoUrl": "/brands/purple_wordmark.svg"
+      "logoUrl": "/brands/purple_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "turbotax",
       "name": "TurboTax",
-      "logoUrl": "/brands/turbotax_wordmark.svg"
+      "logoUrl": "/brands/turbotax_wordmark.svg",
+      "theme": "dark"
     },
     {
       "key": "uber",
@@ -62,7 +69,8 @@
     {
       "key": "wise",
       "name": "Wise",
-      "logoUrl": "/brands/wise_wordmark.svg"
+      "logoUrl": "/brands/wise_wordmark.svg",
+      "theme": "dark"
     }
   ],
   "codes": [
@@ -116,7 +124,7 @@
     },
     {
       "key": "pia",
-      "brandKey": "private-internet-access",
+      "brandKey": "pia",
       "description": "Get 30 days free",
       "url": "https://www.privateinternetaccess.com/pages/buy-a-vpn/1218buyavpn?invite=U2FsdGVkX18P77qeez2G2JCh0J3YNx-hKan2ba92y9g%2CmsfRst0pmkdlVUDQZ33lJdCtHW0"
     },
