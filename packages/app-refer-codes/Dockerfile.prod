@@ -10,11 +10,13 @@ ENV PORT=10400
 # BUILD
 FROM base AS build
 
+ENV NODE_ENV=development
+
 WORKDIR /root
 
 COPY ./package.json ./
 COPY ./package-lock.json ./
-RUN npm ci --include=dev
+RUN npm ci
 
 COPY ./astro.config.mjs ./
 COPY ./components.json ./

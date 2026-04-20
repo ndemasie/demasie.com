@@ -8,11 +8,13 @@ ENV PORT=10200
 # BUILD
 FROM base AS build
 
+ENV NODE_ENV=development
+
 WORKDIR /root
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 COPY ./src ./src
 
